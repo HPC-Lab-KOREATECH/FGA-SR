@@ -29,12 +29,20 @@ FGA integrates:
 ## 🖼️ Overview
 
 <p align="center">
-  <img src="assets/network_structure.png" width="820" alt="FGA overview diagram"/>
+  <img src="assets/network_structure.png" width="720" alt="FGA architecture: backbone + upsampler (FF-MLP, PixelShuffle, CAL/XRA, Conv)" />
 </p>
+<p align="center"><sub><b>Fig. 1.</b> Architecture overview.</sub></p>
 
 <p align="center">
-  <img src="assets/fft_and_feat.png" width="820" alt="FFT spectrum and Feature map results of basic and our upsampler"/>
+  <img src="assets/fft_and_feat.png" width="720" alt="Frequency spectra and feature maps: Interp+Conv, Deconv, PixelShuffle, FGA, GT" />
 </p>
+<p align="center"><sub><b>Fig. 2.</b> Spectra & feature maps.</sub></p>
+
+### What the figures show (brief)
+- **FGA upsampler** plugs into any SR backbone. Inside: <i>Conv → Fourier-Feature MLP → PixelShuffle</i> (×N), then **CAL/XRA** for cross-resolution alignment, and a final <i>Conv</i> to RGB.
+- **Fourier-Feature MLP** injects frequency-aware positional cues (sin/cos encoding) so the upsampler attends to texture-dense regions.
+- **CAL/XRA** computes correlations between upsampled features and backbone features to recover sharp details while suppressing artifacts.
+- **Fig. 2** compares common upsamplers: FGA shows more **symmetric high-frequency energy** in FFT magnitude and **cleaner micro-patterns** in feature maps—fewer checkerboard/aliasing effects (backbone network is EDSR).
 
 ---
 
@@ -132,25 +140,25 @@ class MySRNet(nn.Module):
 **Metric**: PSNR on **Y-channel** (Set5 / Set14 / BSD100 / Urban100 / Manga109 / DTD235).
 | Backbone | Upsampler | Set5 | Set14 | BSD100 | Urban100 | Manga109 | DTD235 |
 |:--|:--|:--|:--|:--|:--|:--|:--|
-| **EDSRµ** | SPC | 32.12 | 28.59 | 27.58 | 26.08 | 30.41 | 29.73 |
+| **EDSR-µ** | SPC | 32.12 | 28.59 | 27.58 | 26.08 | 30.41 | 29.73 |
 |  | **FGA** | **32.30** | **28.68** | **27.64** | **26.27** | **30.74** | **29.80** |
-| **EDSR (orig.)** | SPC | 32.46 | 28.80 | 27.71 | 26.64 | 31.02 | 29.91 |
+| **EDSR** | SPC | 32.46 | 28.80 | 27.71 | 26.64 | 31.02 | 29.91 |
 |  | **FGA** | **32.50** | **28.80** | **27.74** | **26.67** | **31.05** | 29.89 |
-| **RCANµ** | SPC | 32.34 | 28.69 | 27.65 | 26.44 | 30.78 | 29.88 |
+| **RCAN-µ** | SPC | 32.34 | 28.69 | 27.65 | 26.44 | 30.78 | 29.88 |
 |  | **FGA** | **32.43** | **28.76** | **27.70** | **26.52** | **30.94** | 29.90 |
-| **RCAN (orig.)** | SPC | 32.63 | 28.87 | 27.77 | 26.82 | 31.22 | 30.00 |
-|  | **FGA** | 32.63 / **0.9007** | **28.88** | **27.79** | **26.83** | **31.23** | **30.02** |
-| **HANµ** | SPC | 32.44 | 28.76 | 27.70 | 26.55 | 30.96 | 29.92 |
+| **RCAN** | SPC | 32.63 | 28.87 | 27.77 | 26.82 | 31.22 | 30.00 |
+|  | **FGA** | 32.63 | **28.88** | **27.79** | **26.83** | **31.23** | **30.02** |
+| **HAN-µ** | SPC | 32.44 | 28.76 | 27.70 | 26.55 | 30.96 | 29.92 |
 |  | **FGA** | **32.52** | **28.85** | **27.75** | **26.70** | **31.21** | **29.97** |
-| **HAN (orig.)** | SPC | 32.64 | 28.90 | 27.80 | 26.85 | 31.42 | 30.06 |
+| **HAN** | SPC | 32.64 | 28.90 | 27.80 | 26.85 | 31.42 | 30.06 |
 |  | **FGA** | **32.68** | **28.93** | **27.81** | **26.91** | **31.43** | 30.06 |
-| **NLSNµ** | SPC | 32.30 | 28.69 | 27.65 | 26.37 | 30.75 | 29.84 |
+| **NLSN-µ** | SPC | 32.30 | 28.69 | 27.65 | 26.37 | 30.75 | 29.84 |
 |  | **FGA** | **32.48** | **28.81** | **27.73** | **26.64** | **31.17** | **29.96** |
-| **NLSN (orig.)** | SPC | 32.59 | 28.87 | 27.78 | 26.96 | 31.27 | 30.08 |
+| **NLSN** | SPC | 32.59 | 28.87 | 27.78 | 26.96 | 31.27 | 30.08 |
 |  | **FGA** | **32.72** | **28.98** | **27.85** | **27.09** | **31.59** | **30.11** |
-| **SwinIRµ** | SPC | 32.49 | 28.86 | 27.75 | 26.66 | 31.23 | 29.96 |
+| **SwinIR-µ** | SPC | 32.49 | 28.86 | 27.75 | 26.66 | 31.23 | 29.96 |
 |  | **FGA** | **32.59** | **28.97** | **27.82** | **26.86** | **31.55** | **30.06** |
-| **SwinIR (orig.)** | SPC | 32.92 | 29.09 | 27.92 | 27.45 | 32.03 | 30.28 |
+| **SwinIR** | SPC | 32.92 | 29.09 | 27.92 | 27.45 | 32.03 | 30.28 |
 |  | **FGA** | **32.96** | **29.13** | **27.96** | **27.47** | **32.14** | **30.29** |
 
 ### 📐 Frequency-Domain Metric: FRC-AUC (Top-25% rings)
@@ -233,4 +241,3 @@ Instead of judging only in pixel space (PSNR/SSIM), FRC computes correlation **p
 
 ## 📄 License
 This project is released under the **Apache-2.0 License**. See [LICENSE](LICENSE).
-```
