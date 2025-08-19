@@ -1,0 +1,4 @@
+einops
+torch>=1.7
+timm
+basicsr==1.3.4.9
