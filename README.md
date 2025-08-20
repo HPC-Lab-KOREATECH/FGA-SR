@@ -1,8 +1,8 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2508.10616-b31b1b.svg)](https://arxiv.org/abs/2508.10616)
-[![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org/)
-[![PyTorch](https://img.shields.io/badge/PyTorch-1.10%2B-EE4C2C.svg)](https://pytorch.org/)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](#license)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/yourname/FGA-SR/pulls)
+[![🤗 Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Model-FGA--SR-ffcc4d)](https://huggingface.co/datasets/choidj/FGA-SR)
+[![🤗 Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Model-FGA--SR-ffcc4d)](https://huggingface.co/choidj/FGA-SR)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/HPC-Lab-KOREATECH/FGA-SR/pulls)
 
 # FGA-SR: Fourier-Guided Attention Upsampling for Image Super-Resolution
 
@@ -50,7 +50,8 @@ FGA integrates:
 
 * ✅ **2025-08-14**: arXiv v1 released.
 * ✅ **2025-08-20**: Private code release (this repository).
-* ⬜ Model zoo & pretrained weights for ×4.
+* ✅ Model zoo & pretrained weights for ×4.
+* ✅ DTD235 dataset released.
 * ⬜ Update inference code.
 * ⬜ Offer visual SR results.
 
@@ -83,7 +84,7 @@ Or use the provided [dockerfile](dockerfile).
   - **Training and testing datasets**
     - [Dataset Preparation (BasicSR)](https://github.com/XPixelGroup/BasicSR/blob/master/docs/DatasetPreparation.md)
   - **Additionally, we offer the DTD235 test set (focusing on texture dataset)**
-    - [Guide/Download](#)  <!-- TODO: add link -->
+    - [DTD235](https://huggingface.co/choidj/FGA-SR)
 
 ---
 
@@ -98,7 +99,9 @@ Or use the provided [dockerfile](dockerfile).
 
 ```
 
-### Training
+### Testing
+
+- Put or Refer to [options/train](options/train) folder for training
 ```bash
 # 1 GPU
 python fga/train.py -opt options/train/options/EDSR/train_EDSR-FGAx4.yml
@@ -106,6 +109,20 @@ python fga/train.py -opt options/train/options/EDSR/train_EDSR-FGAx4.yml
 # DDP (multi-GPU)
 torchrun --nproc_per_node=4 fga/train.py -opt options/train/options/SwinIR/train_SwinIR-FGAx4.yml --launcher pytorch
 ```
+Training logs and weights will be saved in the experiments/ folder.
+---
+
+### Training
+
+- Put or Refer to [options/train](options/train) folder for training
+```bash
+# 1 GPU
+python fga/train.py -opt options/train/options/EDSR/train_EDSR-FGAx4.yml
+
+# DDP (multi-GPU)
+torchrun --nproc_per_node=4 fga/train.py -opt options/train/options/SwinIR/train_SwinIR-FGAx4.yml --launcher pytorch
+```
+Training logs and weights will be saved in the experiments/ folder.
 ---
 
 ## 🔩 Integrate FGA into Your Model
@@ -167,7 +184,7 @@ class MySRNet(nn.Module):
 Instead of judging only in pixel space (PSNR/SSIM), FRC computes correlation **per radial frequency ring** after a 2D FFT, revealing **high-frequency fidelity** (textures, thin edges) and issues like **aliasing/checkerboard**.
 
 - **How it works (brief)**  
-  1) Convert images to Y-channel (recommended) and apply 2D FFT.  
+  1) Apply 2D FFT.  
   2) Partition the spectrum into rings with equal numbers of pixels.  
   3) Compute a normalized correlation on each ring → **FRC curve** in \[0, 1\] (low→high frequency).
 
@@ -219,12 +236,30 @@ Instead of judging only in pixel space (PSNR/SSIM), FRC computes correlation **p
 
 ---
 
-## 🧰 Model Zoo (placeholders)
+## 🧰 Model Zoo
 
-| Scale | Backbone | Config | Weights | Note |
-|:--:|:--:|:--:|:--:|:--|
-| ×4 | Lightweight | [Guide/Download](#) | [Guide/Download](#) | — |
-| ×4 | Full-capacity | [Guide/Download](#) | [Guide/Download](#) | — |
+<details>
+<summary><b>Configs and Weights</b></summary>
+
+| Scale | Backbone | Upsampler | Config | Weights | Note |
+|:--:|:--:|:--:|:--:|:--:|:--|
+| ×4 | EDSR-µ | SPC | [Config](options/train/EDSR/train_EDSR-LWx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/EDSR/EDSR-LW-SPCx4.pth) | — |
+| ×4 | EDSR-µ | FGA | [Config](options/train/EDSR/train_EDSR-LW-FGAx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/EDSR/EDSR-LW-FGAx4.pth) | — |
+| ×4 | EDSR-origin | FGA | [Config](options/train/EDSR/train_EDSR-FGAx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/EDSR/EDSR-FGAx4.pth) | — |
+| ×4 | RCAN-µ | SPC | [Config](options/train/RCAN/train_RCAN-LWx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/RCAN/RCAN-LW-SPCx4.pth) | — |
+| ×4 | RCAN-µ | FGA | [Config](options/train/RCAN/train_RCAN-LW-FGAx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/RCAN/RCAN-LW-FGAx4.pth) | — |
+| ×4 | RCAN-origin | FGA | [Config](options/train/RCAN/train_RCAN-FGAx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/RCAN/RCAN-FGAx4.pth) | — |
+| ×4 | HAN-µ | SPC | [Config](options/train/HAN/train_HAN-LWx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/HAN/HAN-LW-SPCx4.pth) | — |
+| ×4 | HAN-µ | FGA | [Config](options/train/HAN/train_HAN-LW-FGAx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/HAN/HAN-LW-FGAx4.pth) | — |
+| ×4 | HAN-origin | FGA | [Config](options/train/HAN/train_HAN-FGAx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/HAN/HAN-FGAx4.pth) | — |
+| ×4 | NLSN-µ | SPC | [Config](options/train/NLSN/train_NLSN-LWx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/NLSN/NLSN-LW-SPCx4.pth) | — |
+| ×4 | NLSN-µ | FGA | [Config](options/train/NLSN/train_NLSN-LW-FGAx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/NLSN/NLSN-LW-FGAx4.pth) | — |
+| ×4 | NLSN-origin | FGA | [Config](options/train/NLSN/train_NLSN-FGAx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/NLSN/NLSN-FGAx4.pth) | — |
+| ×4 | SwinIR-µ | SPC | [Config](options/train/SwinIR/train_SwinIR-LWx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/SwinIR/SwinIR-LW-SPCx4.pth) | — |
+| ×4 | SwinIR-µ | FGA | [Config](options/train/SwinIR/train_SwinIR-LW-FGAx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/SwinIR/SwinIR-LW-FGAx4.pth) | — |
+| ×4 | SwinIR-origin | FGA | [Config](options/train/SwinIR/train_SwinIR-FGAx4.yml) | [Weight](https://huggingface.co/choidj/FGA-SR/blob/main/FGA/SwinIR/SwinIR-FGAx4.pth) | — |
+
+</details>
 
 ---
 
@@ -238,6 +273,12 @@ Instead of judging only in pixel space (PSNR/SSIM), FRC computes correlation **p
   year    = {2025}
 }
 ```
+---
+
+## Thanks
+
+---
+## Contact
 
 ---
 
