@@ -1,0 +1,32 @@
+{
+    "title": "FGA-SR: RCAN lightweight-scale results",
+    "type": "basicsr-results",
+    "targets": [
+        {
+            "groundTruth": true,
+            "path": "/GT/{dataset}",
+            "label": "GT"
+        },
+        {
+            "path": "/GT/{dataset}_HF_vis",
+            "label": "GT (HF)"
+        },
+        {
+            "path": "/RCAN-LWx4/{dataset}",
+            "label": "RCAN-LW-SPC"
+        },
+        {
+            "path": "/RCAN-LWx4/{dataset}_HF_vis",
+            "label": "RCAN-LW-SPC (HF)"
+        },
+        {
+            "path": "/RCAN-LW-FGAx4/{dataset}",
+            "label": "RCAN-LW-FGA"
+        },
+        {
+            "path": "/RCAN-LW-FGAx4/{dataset}_HF_vis",
+            "label": "RCAN-LW-FGA (HF)"
+        }
+    ],
+    "configHelp": "Available {dataset} = Manga109, Set5, Set14, Urban100 + (BSDS100, BSDS200, DTD235)"
+}

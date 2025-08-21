@@ -1,0 +1,32 @@
+{
+    "title": "FGA-SR: NLSN lightweight-scale results",
+    "type": "basicsr-results",
+    "targets": [
+        {
+            "groundTruth": true,
+            "path": "/GT/{dataset}",
+            "label": "GT"
+        },
+        {
+            "path": "/GT/{dataset}_HF_vis",
+            "label": "GT (HF)"
+        },
+        {
+            "path": "/NLSN-LWx4/{dataset}",
+            "label": "NLSN-LW-SPC"
+        },
+        {
+            "path": "/NLSN-LWx4/{dataset}_HF_vis",
+            "label": "NLSN-LW-SPC (HF)"
+        },
+        {
+            "path": "/NLSN-LW-FGAx4/{dataset}",
+            "label": "NLSN-LW-FGA"
+        },
+        {
+            "path": "/NLSN-LW-FGAx4/{dataset}_HF_vis",
+            "label": "NLSN-LW-FGA (HF)"
+        }
+    ],
+    "configHelp": "Available {dataset} = Manga109, Set5, Set14, Urban100 + (BSDS100, BSDS200, DTD235)"
+}
