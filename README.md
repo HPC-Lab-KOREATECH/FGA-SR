@@ -1,5 +1,6 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2508.10616-b31b1b.svg)](https://arxiv.org/abs/2508.10616)
 [![Project Page](https://img.shields.io/badge/Project%20Page-FGA--SR-1f6feb)](https://hpc-lab-koreatech.github.io/FGA-SR/)
+[![🤗 Test Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Test%20Dataset-choidj%2FDTD235-ffcc4d)](https://huggingface.co/datasets/choidj/DTD235)
 [![🤗 Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Weights-choidj/FGA--SR-ffcc4d)](https://huggingface.co/choidj/FGA-SR)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/HPC-Lab-KOREATECH/FGA-SR/pulls)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](#license)
@@ -86,7 +87,8 @@ Or use the provided [Dockerfile](dockerfile).
   - **Training and testing datasets**
     - [Dataset Preparation (BasicSR)](https://github.com/XPixelGroup/BasicSR/blob/master/docs/DatasetPreparation.md)
   - **DTD235 testing dataset, a texture-focused test set randomly sampled from the [DTD dataset](https://www.robots.ox.ac.uk/~vgg/data/dtd).**
-    - [![🤗 DTD235](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-choidj/DTD235-ffcc4d)](https://huggingface.co/datasets/choidj/FGA-SR)
+    - [![🤗 Test Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Test%20Dataset-choidj%2FDTD235-ffcc4d)](https://huggingface.co/datasets/choidj/DTD235)
+
 
 ### ▶️ Inference
 
