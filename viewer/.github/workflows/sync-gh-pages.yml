@@ -1,0 +1,23 @@
+name: sync-gh-pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync-gh-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout gh-pages branch
+        uses: actions/checkout@v4
+        with:
+          ref: 'gh-pages'
+
+      - name: Pull changes from main
+        run: |
+          git pull origin main
+
+      - name: Push changes
+        run: |
+          git push origin gh-pages

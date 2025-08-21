@@ -1,0 +1,19 @@
+{
+  "title": "demos",
+  "targets": [
+    {
+      "groundTruth": true,
+      "path": "demos/{data}/a"
+    },
+    {
+      "path": "demos/{data}/b"
+    },
+    {
+      "path": "demos/{data}/c"
+    },
+    {
+      "path": "demos/{data}/d"
+    }
+  ],
+  "configHelp": "Available {data} = alpha, beta"
+}
