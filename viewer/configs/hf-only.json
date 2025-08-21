@@ -87,5 +87,5 @@
       "label": "SwinIRx4 (HF)"
     }
   ],
-  "configHelp": "Available {dataset} = BSDS100, BSDS100_HF_vis, DTD235, DTD235_HF_vis, Manga109, Manga109_HF_vis, Set14, Set14_HF_vis, Set5, Set5_HF_vis, Urban100, Urban100_HF_vis"
+  "configHelp": "Available {dataset} = BSDS100, DTD235, Manga109, Set14, Set5, Urban100"
 }

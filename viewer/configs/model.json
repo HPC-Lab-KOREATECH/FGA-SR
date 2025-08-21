@@ -1,0 +1,47 @@
+{
+  "title": "FGA-SR RESULT VIEWER",
+  "targets": [
+    {
+      "groundTruth": true,
+      "path": "/GT/{dataset}",
+      "label": "GT"
+    },
+    {
+      "path": "/GT/{dataset}_HF_vis",
+      "label": "GT (HF)"
+    },
+    {
+      "path": "/{model}-FGAx4/{dataset}",
+      "label": "{model}-FGAx4"
+    },
+    {
+      "path": "/{model}-FGAx4/{dataset}_HF_vis",
+      "label": "{model}-FGAx4 (HF)"
+    },
+    {
+      "path": "/{model}-LW-FGAx4/{dataset}",
+      "label": "{model}-LW-FGAx4"
+    },
+    {
+      "path": "/{model}-LW-FGAx4/{dataset}_HF_vis",
+      "label": "{model}-LW-FGAx4 (HF)"
+    },
+    {
+      "path": "/{model}-LWx4/{dataset}",
+      "label": "{model}-LWx4"
+    },
+    {
+      "path": "/{model}-LWx4/{dataset}_HF_vis",
+      "label": "{model}-LWx4 (HF)"
+    },
+    {
+      "path": "/{model}x4/{dataset}",
+      "label": "{model}x4"
+    },
+    {
+      "path": "/{model}x4/{dataset}_HF_vis",
+      "label": "{model}x4 (HF)"
+    }
+  ],
+  "configHelp": "Available {model} = EDSR, HAN, NLSN, RCAN, SwinIR, {dataset} = BSDS100, DTD235, Manga109, Set14, Set5, Urban100"
+}
