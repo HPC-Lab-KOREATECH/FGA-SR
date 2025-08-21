@@ -832,8 +832,7 @@ class SwinIR_(nn.Module):
             res = self.conv_after_body(self.forward_features(x_first)) + x_first
             x = x + self.conv_last(res)
         
-        # for testing, it will be on
-        # x = x / self.img_range + self.mean 
+        x = x / self.img_range + self.mean 
 
         return x[:, :, :H*self.upscale, :W*self.upscale]
 

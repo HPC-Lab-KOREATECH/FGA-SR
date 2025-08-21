@@ -62,7 +62,6 @@ network_upsampler:
   out_dim: 3
   upscale: 4
   # attention args
-  use_attn: True
   window_size: 1
   overlap_ratio: 4
 

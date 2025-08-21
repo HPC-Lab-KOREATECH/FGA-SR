@@ -63,11 +63,11 @@ def write_version_py():
     version_info_tuple = _to_tuple(short_version)
 
     content = f"""# GENERATED VERSION FILE
-                # TIME: {time.asctime()}
-                __version__ = '{short_version}'
-                __gitsha__ = '{sha}'
-                version_info = {version_info_tuple}
-                """
+# TIME: {time.asctime()}
+__version__ = '{short_version}'
+__gitsha__ = '{sha}'
+version_info = {version_info_tuple}
+"""
     os.makedirs(os.path.dirname(version_file), exist_ok=True)
     with open(version_file, 'w', encoding='utf-8') as f:
         f.write(content)

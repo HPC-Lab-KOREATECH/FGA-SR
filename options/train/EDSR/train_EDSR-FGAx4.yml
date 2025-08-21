@@ -63,11 +63,8 @@ network_upsampler:
   out_dim: 3
   upscale: 4
   # attention args
-  use_attn: True
   window_size: 1
   overlap_ratio: 4
-  # upsampler args
-  mlp_depth: 0
 
 path:
   pretrain_network_g: experiments/pretrained_models/EDSR/EDSR_x4.pt

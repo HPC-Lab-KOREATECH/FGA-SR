@@ -11,7 +11,7 @@
 
 > **Fourier-Guided Attention Upsampling for Image Super-Resolution**  
 > *Daejune Choi, Youchan No, Jinhyung Lee, Duksu Kim*  
-> [[Paper]](https://arxiv.org/abs/2508.10616)
+> [[Paper]](https://arxiv.org/abs/2508.10616) [[Project Page]](https://hpc-lab-koreatech.github.io/FGA-SR/) [[Dataset]](https://huggingface.co/datasets/choidj/FGA-SR) [[Weights]](https://huggingface.co/choidj/FGA-SR)
 
 ---
 
@@ -53,8 +53,8 @@ FGA integrates:
 * ✅ **2025-08-20**: Code release (this repository).
 * ✅ **2025-08-20**: Model zoo & pretrained weights for ×4.
 * ✅ **2025-08-20**: DTD235 dataset released.
-* ⬜ Update inference code.
-* ⬜ Offer visual SR results.
+* ✅ **2025-08-21**: Visual SR results.
+* ✅ **2025-08-21**: Inference code.
 
 ---
 
@@ -79,7 +79,9 @@ Or use the provided [Dockerfile](dockerfile).
 
 ---
 
-## 📁 Dataset
+## 🚀 Quick Start
+
+### 📁 Dataset
 
 - For data preparation, refer to:
   - **Training and testing datasets**
@@ -87,32 +89,38 @@ Or use the provided [Dockerfile](dockerfile).
   - **Additionally, we provide the DTD235 test set (texture-focused).**
     - [DTD235](https://huggingface.co/choidj/FGA-SR)
 
----
-
-## 🚀 Quick Start
-
 ### ▶️ Inference
 
-Examples coming soon.
+Get pretrained weights for all supported backbones from [![🤗 Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Weights-choidj/FGA--SR-ffcc4d)](https://huggingface.co/choidj/FGA-SR).
+
+Download an **FGA ×4** checkpoint (e.g., `EDSR-FGAx4.pth`, `EDSR-LW-FGAx4.pth`,...) and run:
 
 ```bash
-# single image
+# General format
+python inference.py --backbone [backbone] --input_dir [input_dir] --output_dir [output_dir]  --weight_path [weight_path]
 
+# SwinIR example
+python inference.py --backbone SwinIR --input_dir [input_dir] --output_dir [output_dir]  --model_path weights/SwinIR-FGAx4.pth
 ```
+> **Important:** This inference script supports **FGA** upsamplers **only**.  
+> ✅ `EDSR-LW-FGAx4.pth` (supported)  
+> ❌ `EDSR-LWx4.pth` (not supported)  
+> `--backbone`: one of `EDSR`, `EDSR-LW`, `RCAN`, `RCAN-LW`, `HAN`, `HAN-LW`, `SwinIR`, `SwinIR-LW`, `NLSN`, `NLSN-LW`  
+> `--model_path`: path to the downloaded checkpoint
 
 ### 🧪 Testing
 
-- Put or Refer to [options/test](options/test) folder for training
+- Refer our .yml file or make your .yml file in the [options/test](options/test) folder for testing and run:
 ```bash
 # 1 GPU
 python fga/test.py -opt options/test/EDSR/test_EDSR-FGAx4.yml
 ```
-Testing logs and outputs are saved in `results/`.
+- Testing logs and outputs are saved in `results/`.
 ---
 
 ### 🏋️ Training
 
-- Put or Refer to [options/train](options/train) folder for training
+- Refer our .yml file or make your .yml file in the [options/train](options/train) folder for training and run:
 ```bash
 # 1 GPU
 python fga/train.py -opt options/train/EDSR/train_EDSR-FGAx4.yml
@@ -120,7 +128,7 @@ python fga/train.py -opt options/train/EDSR/train_EDSR-FGAx4.yml
 # DDP (multi-GPU)
 torchrun --nproc_per_node=4 fga/train.py -opt options/train/SwinIR/train_SwinIR-FGAx4.yml --launcher pytorch
 ```
-Training logs, checkpoints, and samples are saved in `experiments/`.
+- Training logs, checkpoints, and samples are saved in `experiments/`.
 ---
 
 ## 🔩 Integrate FGA into Your Model
@@ -148,25 +156,27 @@ class MySRNet(nn.Module):
 
 ---
 
-## 📊 Results (×4, Lightweight-scale (µ) & Original-scale combined)
+## 📊 Results (×4, Lightweight-scale (µ) & Original-scale)
 
-**SPC** : Sub-Pixel Convolution (**PixelShuffle**)
-**FGA** : Fourier-Guided Attention (**Ours**)
+**SPC** : Sub-Pixel Convolution (**PixelShuffle**)  
+**FGA** : Fourier-Guided Attention (**Ours**)  
 
-<details>
-<summary><b>Parameters</b></summary>
+**Backbones**: EDSR, RCAN, HAN, NLSN, SwinIR  
+**Backbone scale**: Lightweight-scale (µ), Original-scale (origin)  
 
-| Setting        |  EDSR |  RCAN |  HAN  |  NLSN | SwinIR |
-| -------------- | :---: | :---: | :---: | :---: | :----: |
-| µ + SPC        |  1.5M |  4.3M |  8.6M |  1.6M |  1.2M  |
-| µ + FGA        |  1.8M |  4.6M |  8.9M |  1.9M |  1.5M  |
-| Original + SPC | 38.7M | 15.6M | 16.1M | 39.7M |  11.9M |
-| Original + FGA | 39.0M | 15.9M | 16.4M | 40.0M |  12.2M |
+> <details>
+> <summary><b>Parameters</b></summary>
+> 
+> | Setting        |  EDSR |  RCAN |  HAN  |  NLSN | SwinIR |
+> | -------------- | :---: | :---: | :---: | :---: | :----: |
+> | µ + SPC        |  1.5M |  4.3M |  8.6M |  1.6M |  1.2M  |
+> | µ + FGA        |  1.8M |  4.6M |  8.9M |  1.9M |  1.5M  |
+> | Original + SPC | 38.7M | 15.6M | 16.1M | 39.7M |  11.9M |
+> | Original + FGA | 39.0M | 15.9M | 16.4M | 40.0M |  12.2M |
+> 
+> </details>
 
-</details>
-
-**Backbones**: EDSR, RCAN, HAN, NLSN, SwinIR.  
-**Settings**: For each backbone, **top row = SPC** (baseline), **bottom row = FGA** (ours).  
+**Settings**: For each backbone, **top row = SPC** (baseline), **bottom row = FGA** (ours)
 
 ### 📈 PSNR
 > 
@@ -233,7 +243,15 @@ We additionally report **FRC-AUC (Top-25% frequency rings)** as frequency-domain
 
 
 ### 🖼️ Visual results (SR images and Top-25% ring images)
-
+>
+> #### Shortcuts for visual viewer
+> ```
+> ← , →: previous, next image
+> shift + wheel: page zoom
+> (z)oom mode (toggle)
+> wheel: resize zoom area (in zoom mode)
+> ```
+>
 > <details>
 > <summary><b>Per‑backbone galleries</b></summary>
 > 
@@ -306,7 +324,6 @@ We are deeply grateful to the authors and contributors of these projects for the
 If you have any question, please email eowns02@gmail.com to discuss with the author.
 
 <!-- Footnote link definitions: Visual galleries -->
-
 [EDSR-LW-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr-lw.json&dataset=Set5
 [EDSR-LW-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr-lw.json&dataset=Set14
 [EDSR-LW-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr-lw.json&dataset=BSD100
@@ -379,31 +396,34 @@ If you have any question, please email eowns02@gmail.com to discuss with the aut
 
 
 <!-- Footnote link definitions: Model Zoo -->
-
 [EDSR-LW-SPC-config]: options/train/EDSR/train_EDSR-LWx4.yml
 [EDSR-LW-SPC-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/EDSR/EDSR-LW-SPCx4.pth
 [EDSR-LW-FGA-config]: options/train/EDSR/train_EDSR-LW-FGAx4.yml
 [EDSR-LW-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/EDSR/EDSR-LW-FGAx4.pth
 [EDSR-FGA-config]: options/train/EDSR/train_EDSR-FGAx4.yml
 [EDSR-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/EDSR/EDSR-FGAx4.pth
+
 [RCAN-LW-SPC-config]: options/train/RCAN/train_RCAN-LWx4.yml
 [RCAN-LW-SPC-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/RCAN/RCAN-LW-SPCx4.pth
 [RCAN-LW-FGA-config]: options/train/RCAN/train_RCAN-LW-FGAx4.yml
 [RCAN-LW-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/RCAN/RCAN-LW-FGAx4.pth
 [RCAN-FGA-config]: options/train/RCAN/train_RCAN-FGAx4.yml
 [RCAN-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/RCAN/RCAN-FGAx4.pth
+
 [HAN-LW-SPC-config]: options/train/HAN/train_HAN-LWx4.yml
 [HAN-LW-SPC-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/HAN/HAN-LW-SPCx4.pth
 [HAN-LW-FGA-config]: options/train/HAN/train_HAN-LW-FGAx4.yml
 [HAN-LW-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/HAN/HAN-LW-FGAx4.pth
 [HAN-FGA-config]: options/train/HAN/train_HAN-FGAx4.yml
 [HAN-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/HAN/HAN-FGAx4.pth
+
 [NLSN-LW-SPC-config]: options/train/NLSN/train_NLSN-LWx4.yml
 [NLSN-LW-SPC-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/NLSN/NLSN-LW-SPCx4.pth
 [NLSN-LW-FGA-config]: options/train/NLSN/train_NLSN-LW-FGAx4.yml
 [NLSN-LW-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/NLSN/NLSN-LW-FGAx4.pth
 [NLSN-FGA-config]: options/train/NLSN/train_NLSN-FGAx4.yml
 [NLSN-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/NLSN/NLSN-FGAx4.pth
+
 [SwinIR-LW-SPC-config]: options/train/SwinIR/train_SwinIR-LWx4.yml
 [SwinIR-LW-SPC-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/SwinIR/SwinIR-LW-SPCx4.pth
 [SwinIR-LW-FGA-config]: options/train/SwinIR/train_SwinIR-LW-FGAx4.yml
