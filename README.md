@@ -85,7 +85,7 @@ Or use the provided [Dockerfile](dockerfile).
 - For data preparation, refer to:
   - **Training and testing datasets**
     - [Dataset Preparation (BasicSR)](https://github.com/XPixelGroup/BasicSR/blob/master/docs/DatasetPreparation.md)
-  - **Additionally, we provide DTD235 for testing, a texture-focused test set randomly sampled from the [Describable Textures Dataset (DTD)](https://www.robots.ox.ac.uk/~vgg/data/dtd).**
+  - **DTD235 testing dataset, a texture-focused test set randomly sampled from the [DTD dataset](https://www.robots.ox.ac.uk/~vgg/data/dtd).**
     - [![🤗 Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-choidj/FGA--SR-ffcc4d)](https://huggingface.co/datasets/choidj/FGA-SR)
 
 ### ▶️ Inference
