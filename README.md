@@ -96,16 +96,24 @@ Download an **FGA×4** checkpoint (e.g., `EDSR-FGAx4.pth`, `EDSR-LW-FGAx4.pth`,.
 
 ```bash
 # General format
-python inference.py --backbone [backbone] --input_dir [input_dir] --output_dir [output_dir]  --weight_path [weight_path]
+python inference.py \
+  --backbone [backbone] \
+  --input_dir [input_dir] \
+  --output_dir [output_dir] \
+  --weight_path [weight_path]
 
 # SwinIR example
-python inference.py --backbone SwinIR --input_dir [input_dir] --output_dir [output_dir]  --model_path weights/SwinIR-FGAx4.pth
+python inference.py \
+  --backbone SwinIR \
+  --input_dir [input_dir] \
+  --output_dir [output_dir] \
+  --weight_path weights/SwinIR-FGAx4.pth
 ```
 > **Important:** This inference script supports **FGA** upsamplers **only**.  
 > ✅ `EDSR-LW-FGAx4.pth` (supported)  
 > ❌ `EDSR-LWx4.pth` (not supported)  
 > `--backbone`: one of `EDSR`, `EDSR-LW`, `RCAN`, `RCAN-LW`, `HAN`, `HAN-LW`, `SwinIR`, `SwinIR-LW`, `NLSN`, `NLSN-LW`  
-> `--model_path`: path to the downloaded checkpoint
+> `--weight_path`: path to the downloaded checkpoint
 
 ### 🧪 Testing
 
@@ -125,7 +133,9 @@ python fga/test.py -opt options/test/EDSR/test_EDSR-FGAx4.yml
 python fga/train.py -opt options/train/EDSR/train_EDSR-FGAx4.yml
 
 # DDP (multi-GPU)
-torchrun --nproc_per_node=4 fga/train.py -opt options/train/SwinIR/train_SwinIR-FGAx4.yml --launcher pytorch
+torchrun --nproc_per_node=4 fga/train.py \
+  -opt options/train/SwinIR/train_SwinIR-FGAx4.yml \
+  --launcher pytorch
 ```
 - Training logs, checkpoints, and samples are saved in `experiments/`.
 ---
