@@ -1,0 +1,91 @@
+{
+  "title": "FGA-SR RESULT VIEWER",
+  "targets": [
+    {
+      "groundTruth": true,
+      "path": "/GT/{dataset}_HF_vis",
+      "label": "GT (HF)"
+    },
+    {
+      "path": "/EDSR-FGAx4/{dataset}_HF_vis",
+      "label": "EDSR-FGAx4 (HF)"
+    },
+    {
+      "path": "/EDSR-LW-FGAx4/{dataset}_HF_vis",
+      "label": "EDSR-LW-FGAx4 (HF)"
+    },
+    {
+      "path": "/EDSR-LWx4/{dataset}_HF_vis",
+      "label": "EDSR-LWx4 (HF)"
+    },
+    {
+      "path": "/EDSRx4/{dataset}_HF_vis",
+      "label": "EDSRx4 (HF)"
+    },
+    {
+      "path": "/HAN-FGAx4/{dataset}_HF_vis",
+      "label": "HAN-FGAx4 (HF)"
+    },
+    {
+      "path": "/HAN-LW-FGAx4/{dataset}_HF_vis",
+      "label": "HAN-LW-FGAx4 (HF)"
+    },
+    {
+      "path": "/HAN-LWx4/{dataset}_HF_vis",
+      "label": "HAN-LWx4 (HF)"
+    },
+    {
+      "path": "/HANx4/{dataset}_HF_vis",
+      "label": "HANx4 (HF)"
+    },
+    {
+      "path": "/NLSN-FGAx4/{dataset}_HF_vis",
+      "label": "NLSN-FGAx4 (HF)"
+    },
+    {
+      "path": "/NLSN-LW-FGAx4/{dataset}_HF_vis",
+      "label": "NLSN-LW-FGAx4 (HF)"
+    },
+    {
+      "path": "/NLSN-LWx4/{dataset}_HF_vis",
+      "label": "NLSN-LWx4 (HF)"
+    },
+    {
+      "path": "/NLSNx4/{dataset}_HF_vis",
+      "label": "NLSNx4 (HF)"
+    },
+    {
+      "path": "/RCAN-FGAx4/{dataset}_HF_vis",
+      "label": "RCAN-FGAx4 (HF)"
+    },
+    {
+      "path": "/RCAN-LW-FGAx4/{dataset}_HF_vis",
+      "label": "RCAN-LW-FGAx4 (HF)"
+    },
+    {
+      "path": "/RCAN-LWx4/{dataset}_HF_vis",
+      "label": "RCAN-LWx4 (HF)"
+    },
+    {
+      "path": "/RCANx4/{dataset}_HF_vis",
+      "label": "RCANx4 (HF)"
+    },
+    {
+      "path": "/SwinIR-FGAx4/{dataset}_HF_vis",
+      "label": "SwinIR-FGAx4 (HF)"
+    },
+    {
+      "path": "/SwinIR-LW-FGAx4/{dataset}_HF_vis",
+      "label": "SwinIR-LW-FGAx4 (HF)"
+    },
+    {
+      "path": "/SwinIR-LWx4/{dataset}_HF_vis",
+      "label": "SwinIR-LWx4 (HF)"
+    },
+    {
+      "path": "/SwinIRx4/{dataset}_HF_vis",
+      "label": "SwinIRx4 (HF)"
+    }
+  ],
+  "configHelp": "Available {dataset} = BSDS100, BSDS100_HF_vis, DTD235, DTD235_HF_vis, Manga109, Manga109_HF_vis, Set14, Set14_HF_vis, Set5, Set5_HF_vis, Urban100, Urban100_HF_vis"
+}
