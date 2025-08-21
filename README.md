@@ -86,13 +86,13 @@ Or use the provided [Dockerfile](dockerfile).
   - **Training and testing datasets**
     - [Dataset Preparation (BasicSR)](https://github.com/XPixelGroup/BasicSR/blob/master/docs/DatasetPreparation.md)
   - **DTD235 testing dataset, a texture-focused test set randomly sampled from the [DTD dataset](https://www.robots.ox.ac.uk/~vgg/data/dtd).**
-    - [![🤗 Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-choidj/FGA--SR-ffcc4d)](https://huggingface.co/datasets/choidj/FGA-SR)
+    - [![🤗 DTD235](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-choidj/DTD235-ffcc4d)](https://huggingface.co/datasets/choidj/FGA-SR)
 
 ### ▶️ Inference
 
 Get pretrained weights for all supported backbones from [![🤗 Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Weights-choidj/FGA--SR-ffcc4d)](https://huggingface.co/choidj/FGA-SR).
 
-Download an **FGA ×4** checkpoint (e.g., `EDSR-FGAx4.pth`, `EDSR-LW-FGAx4.pth`,...) and run:
+Download an **FGA×4** checkpoint (e.g., `EDSR-FGAx4.pth`, `EDSR-LW-FGAx4.pth`,...) and run:
 
 ```bash
 # General format
