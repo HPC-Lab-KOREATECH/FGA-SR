@@ -1,6 +1,5 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2508.10616-b31b1b.svg)](https://arxiv.org/abs/2508.10616)
 [![Project Page](https://img.shields.io/badge/Project%20Page-FGA--SR-1f6feb)](https://hpc-lab-koreatech.github.io/FGA-SR/)
-[![🤗 Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-choidj/FGA--SR-ffcc4d)](https://huggingface.co/datasets/choidj/FGA-SR)
 [![🤗 Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Weights-choidj/FGA--SR-ffcc4d)](https://huggingface.co/choidj/FGA-SR)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/HPC-Lab-KOREATECH/FGA-SR/pulls)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](#license)
@@ -11,7 +10,7 @@
 
 > **Fourier-Guided Attention Upsampling for Image Super-Resolution**  
 > *Daejune Choi, Youchan No, Jinhyung Lee, Duksu Kim*  
-> [[Paper]](https://arxiv.org/abs/2508.10616) [[Project Page]](https://hpc-lab-koreatech.github.io/FGA-SR/) [[Dataset]](https://huggingface.co/datasets/choidj/FGA-SR) [[Weights]](https://huggingface.co/choidj/FGA-SR)
+> [[Paper]](https://arxiv.org/abs/2508.10616) [[Project Page]](https://hpc-lab-koreatech.github.io/FGA-SR/) [[Weights]](https://huggingface.co/choidj/FGA-SR)
 
 ---
 
@@ -86,8 +85,8 @@ Or use the provided [Dockerfile](dockerfile).
 - For data preparation, refer to:
   - **Training and testing datasets**
     - [Dataset Preparation (BasicSR)](https://github.com/XPixelGroup/BasicSR/blob/master/docs/DatasetPreparation.md)
-  - **Additionally, we provide the DTD235 test set (texture-focused).**
-    - [DTD235](https://huggingface.co/choidj/FGA-SR)
+  - **Additionally, we provide DTD235 for testing, a texture-focused test set randomly sampled from the [Describable Textures Dataset (DTD)](https://www.robots.ox.ac.uk/~vgg/data/dtd).**
+    - [![🤗 Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-choidj/FGA--SR-ffcc4d)](https://huggingface.co/datasets/choidj/FGA-SR)
 
 ### ▶️ Inference
 
