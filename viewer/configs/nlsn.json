@@ -1,6 +1,5 @@
 {
   "title": "FGA-SR: NLSN original-scale results",
-  "type": "basicsr-results",
   "targets": [
     {
       "path": "/GT/{dataset}",

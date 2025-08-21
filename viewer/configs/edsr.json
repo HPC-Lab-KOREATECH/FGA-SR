@@ -1,6 +1,5 @@
 {
   "title": "FGA-SR: EDSR original-scale results",
-  "type": "basicsr-results",
   "targets": [
     {
       "path": "/GT/{dataset}",

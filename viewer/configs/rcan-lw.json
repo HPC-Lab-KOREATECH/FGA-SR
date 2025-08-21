@@ -1,6 +1,5 @@
 {
   "title": "FGA-SR: RCAN lightweight-scale results",
-  "type": "basicsr-results",
   "targets": [
     {
       "path": "/GT/{dataset}",

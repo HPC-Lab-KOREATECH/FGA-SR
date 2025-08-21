@@ -1,6 +1,5 @@
 {
   "title": "FGA-SR: SwinIR lightweight-scale results",
-  "type": "basicsr-results",
   "targets": [
     {
       "path": "/GT/{dataset}",
