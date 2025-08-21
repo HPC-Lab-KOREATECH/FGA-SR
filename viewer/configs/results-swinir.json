@@ -1,32 +1,31 @@
 {
-    "title": "FGA-SR: SwinIR original-scale results",
-    "type": "basicsr-results",
-    "targets": [
-        {
-            "groundTruth": true,
-            "path": "/GT/{dataset}",
-            "label": "GT"
-        },
-        {
-            "path": "/GT/{dataset}_HF_vis",
-            "label": "GT (HF)"
-        },
-        {
-            "path": "/SwinIRx4/{dataset}",
-            "label": "SwinIR-SPC"
-        },
-        {
-            "path": "/SwinIRx4/{dataset}_HF_vis",
-            "label": "SwinIR-SPC (HF)"
-        },
-        {
-            "path": "/SwinIR-FGAx4/{dataset}",
-            "label": "SwinIR-FGA"
-        },
-        {
-            "path": "/SwinIR-FGAx4/{dataset}_HF_vis",
-            "label": "SwinIR-FGA (HF)"
-        }
-    ],
-    "configHelp": "Available {dataset} = Manga109, Set5, Set14, Urban100 + (BSDS100, BSDS200, DTD235)"
+  "title": "FGA-SR: SwinIR original-scale results",
+  "type": "basicsr-results",
+  "targets": [
+    {
+      "path": "/GT/{dataset}",
+      "label": "GT"
+    },
+    {
+      "path": "/GT/{dataset}_HF_vis",
+      "label": "GT (HF)"
+    },
+    {
+      "path": "/SwinIRx4/{dataset}",
+      "label": "SwinIR-SPC"
+    },
+    {
+      "path": "/SwinIRx4/{dataset}_HF_vis",
+      "label": "SwinIR-SPC (HF)"
+    },
+    {
+      "path": "/SwinIR-FGAx4/{dataset}",
+      "label": "SwinIR-FGA"
+    },
+    {
+      "path": "/SwinIR-FGAx4/{dataset}_HF_vis",
+      "label": "SwinIR-FGA (HF)"
+    }
+  ],
+  "configHelp": "Available {dataset} = Manga109, Set5, Set14, Urban100 + (BSDS100, BSDS200, DTD235)"
 }

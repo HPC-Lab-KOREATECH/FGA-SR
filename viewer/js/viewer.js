@@ -384,25 +384,24 @@ export default class Viewer {
                 } else {
                     container.infoLabel.style.display = 'none';
                 }
+            } else {
+                if (image) {
+                    if (image.psnr || image.ssim) {
+                        let labelTextContent = [];
+                        if (image.psnr) {
+                            labelTextContent.push(`PSNR: ${Math.round(image.psnr * 1e5) / 1e5} (${getOrdinalSuffix(image.psnrRanking)})`);
+                        }
+                        if (image.ssim) {
+                            labelTextContent.push(`SSIM: ${Math.round(image.ssim * 1e5) / 1e5} (${getOrdinalSuffix(image.ssimRanking)})`);
+                        }
+                        labelTextContent = labelTextContent.join(', ');
+                        container.infoLabel.textContent = labelTextContent;
+                        container.infoLabel.style.display = '';
+                    } else {
+                        container.infoLabel.style.display = 'none';
+                    }
+                }
             }
-            // } else {
-            //     if (image) {
-            //         if (image.psnr || image.ssim) {
-            //             let labelTextContent = [];
-            //             if (image.psnr) {
-            //                 labelTextContent.push(`PSNR: ${Math.round(image.psnr * 1e5) / 1e5} (${getOrdinalSuffix(image.psnrRanking)})`);
-            //             }
-            //             if (image.ssim) {
-            //                 labelTextContent.push(`SSIM: ${Math.round(image.ssim * 1e5) / 1e5} (${getOrdinalSuffix(image.ssimRanking)})`);
-            //             }
-            //             labelTextContent = labelTextContent.join(', ');
-            //             container.infoLabel.textContent = labelTextContent;
-            //             container.infoLabel.style.display = '';
-            //         } else {
-            //             container.infoLabel.style.display = 'none';
-            //         }
-            //     }
-            // }
         }
     }
 

@@ -1,32 +1,31 @@
 {
-    "title": "FGA-SR: EDSR lightweight-scale results",
-    "type": "basicsr-results",
-    "targets": [
-        {
-            "groundTruth": true,
-            "path": "/GT/{dataset}",
-            "label": "GT"
-        },
-        {
-            "path": "/GT/{dataset}_HF_vis",
-            "label": "GT (HF)"
-        },
-        {
-            "path": "/EDSR-LWx4/{dataset}",
-            "label": "EDSR-LW-SPC"
-        },
-        {
-            "path": "/EDSR-LWx4/{dataset}_HF_vis",
-            "label": "EDSR-LW-SPC (HF)"
-        },
-        {
-            "path": "/EDSR-LW-FGAx4/{dataset}",
-            "label": "EDSR-LW-FGA"
-        },
-        {
-            "path": "/EDSR-LW-FGAx4/{dataset}_HF_vis",
-            "label": "EDSR-LW-FGA (HF)"
-        }
-    ],
-    "configHelp": "Available {dataset} = Manga109, Set5, Set14, Urban100 + (BSDS100, BSDS200, DTD235)"
+  "title": "FGA-SR: EDSR lightweight-scale results",
+  "type": "basicsr-results",
+  "targets": [
+    {
+      "path": "/GT/{dataset}",
+      "label": "GT"
+    },
+    {
+      "path": "/GT/{dataset}_HF_vis",
+      "label": "GT (HF)"
+    },
+    {
+      "path": "/EDSR-LWx4/{dataset}",
+      "label": "EDSR-LW-SPC"
+    },
+    {
+      "path": "/EDSR-LWx4/{dataset}_HF_vis",
+      "label": "EDSR-LW-SPC (HF)"
+    },
+    {
+      "path": "/EDSR-LW-FGAx4/{dataset}",
+      "label": "EDSR-LW-FGA"
+    },
+    {
+      "path": "/EDSR-LW-FGAx4/{dataset}_HF_vis",
+      "label": "EDSR-LW-FGA (HF)"
+    }
+  ],
+  "configHelp": "Available {dataset} = BSDS100, DTD235, Manga109, Set14, Set5, Urban100"
 }
