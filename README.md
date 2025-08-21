@@ -1,8 +1,9 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2508.10616-b31b1b.svg)](https://arxiv.org/abs/2508.10616)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](#license)
+[![Project Page](https://img.shields.io/badge/Project%20Page-FGA--SR-1f6feb)](https://hpc-lab-koreatech.github.io/FGA-SR/)
 [![🤗 Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Dataset-choidj/FGA--SR-ffcc4d)](https://huggingface.co/datasets/choidj/FGA-SR)
 [![🤗 Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Weights-choidj/FGA--SR-ffcc4d)](https://huggingface.co/choidj/FGA-SR)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/HPC-Lab-KOREATECH/FGA-SR/pulls)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](#license)
 
 # FGA-SR: Fourier-Guided Attention Upsampling for Image Super-Resolution
 
@@ -306,66 +307,75 @@ If you have any question, please email eowns02@gmail.com to discuss with the aut
 
 <!-- Footnote link definitions: Visual galleries -->
 
-[EDSR-LW-Set5]: #
-[EDSR-LW-Set14]: #
-[EDSR-LW-BSD100]: #
-[EDSR-LW-Urban100]: #
-[EDSR-LW-Manga109]: #
-[EDSR-LW-DTD235]: #
-[EDSR-Set5]: #
-[EDSR-Set14]: #
-[EDSR-BSD100]: #
-[EDSR-Urban100]: #
-[EDSR-Manga109]: #
-[EDSR-DTD235]: #
-[RCAN-LW-Set5]: #
-[RCAN-LW-Set14]: #
-[RCAN-LW-BSD100]: #
-[RCAN-LW-Urban100]: #
-[RCAN-LW-Manga109]: #
-[RCAN-LW-DTD235]: #
-[RCAN-Set5]: #
-[RCAN-Set14]: #
-[RCAN-BSD100]: #
-[RCAN-Urban100]: #
-[RCAN-Manga109]: #
-[RCAN-DTD235]: #
-[HAN-LW-Set5]: #
-[HAN-LW-Set14]: #
-[HAN-LW-BSD100]: #
-[HAN-LW-Urban100]: #
-[HAN-LW-Manga109]: #
-[HAN-LW-DTD235]: #
-[HAN-Set5]: #
-[HAN-Set14]: #
-[HAN-BSD100]: #
-[HAN-Urban100]: #
-[HAN-Manga109]: #
-[HAN-DTD235]: #
-[NLSN-LW-Set5]: #
-[NLSN-LW-Set14]: #
-[NLSN-LW-BSD100]: #
-[NLSN-LW-Urban100]: #
-[NLSN-LW-Manga109]: #
-[NLSN-LW-DTD235]: #
-[NLSN-Set5]: #
-[NLSN-Set14]: #
-[NLSN-BSD100]: #
-[NLSN-Urban100]: #
-[NLSN-Manga109]: #
-[NLSN-DTD235]: #
-[SwinIR-LW-Set5]: #
-[SwinIR-LW-Set14]: #
-[SwinIR-LW-BSD100]: #
-[SwinIR-LW-Urban100]: #
-[SwinIR-LW-Manga109]: #
-[SwinIR-LW-DTD235]: #
-[SwinIR-Set5]: #
-[SwinIR-Set14]: #
-[SwinIR-BSD100]: #
-[SwinIR-Urban100]: #
-[SwinIR-Manga109]: #
-[SwinIR-DTD235]: #
+[EDSR-LW-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr-lw.json&dataset=Set5
+[EDSR-LW-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr-lw.json&dataset=Set14
+[EDSR-LW-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr-lw.json&dataset=BSD100
+[EDSR-LW-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr-lw.json&dataset=Urban100
+[EDSR-LW-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr-lw.json&dataset=Manga109
+[EDSR-LW-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr-lw.json&dataset=DTD235
+
+[EDSR-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr.json&dataset=Set5
+[EDSR-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr.json&dataset=Set14
+[EDSR-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr.json&dataset=BSD100
+[EDSR-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr.json&dataset=Urban100
+[EDSR-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr.json&dataset=Manga109
+[EDSR-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=edsr.json&dataset=DTD235
+
+[RCAN-LW-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan-lw.json&dataset=Set5
+[RCAN-LW-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan-lw.json&dataset=Set14
+[RCAN-LW-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan-lw.json&dataset=BSD100
+[RCAN-LW-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan-lw.json&dataset=Urban100
+[RCAN-LW-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan-lw.json&dataset=Manga109
+[RCAN-LW-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan-lw.json&dataset=DTD235
+
+[RCAN-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan.json&dataset=Set5
+[RCAN-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan.json&dataset=Set14
+[RCAN-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan.json&dataset=BSD100
+[RCAN-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan.json&dataset=Urban100
+[RCAN-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan.json&dataset=Manga109
+[RCAN-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=rcan.json&dataset=DTD235
+
+[HAN-LW-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han-lw.json&dataset=Set5
+[HAN-LW-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han-lw.json&dataset=Set14
+[HAN-LW-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han-lw.json&dataset=BSD100
+[HAN-LW-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han-lw.json&dataset=Urban100
+[HAN-LW-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han-lw.json&dataset=Manga109
+[HAN-LW-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han-lw.json&dataset=DTD235
+
+[HAN-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han.json&dataset=Set5
+[HAN-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han.json&dataset=Set14
+[HAN-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han.json&dataset=BSD100
+[HAN-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han.json&dataset=Urban100
+[HAN-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han.json&dataset=Manga109
+[HAN-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=han.json&dataset=DTD235
+
+[NLSN-LW-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn-lw.json&dataset=Set5
+[NLSN-LW-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn-lw.json&dataset=Set14
+[NLSN-LW-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn-lw.json&dataset=BSD100
+[NLSN-LW-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn-lw.json&dataset=Urban100
+[NLSN-LW-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn-lw.json&dataset=Manga109
+[NLSN-LW-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn-lw.json&dataset=DTD235
+
+[NLSN-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn.json&dataset=Set5
+[NLSN-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn.json&dataset=Set14
+[NLSN-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn.json&dataset=BSD100
+[NLSN-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn.json&dataset=Urban100
+[NLSN-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn.json&dataset=Manga109
+[NLSN-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=nlsn.json&dataset=DTD235
+
+[SwinIR-LW-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir-lw.json&dataset=Set5
+[SwinIR-LW-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir-lw.json&dataset=Set14
+[SwinIR-LW-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir-lw.json&dataset=BSD100
+[SwinIR-LW-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir-lw.json&dataset=Urban100
+[SwinIR-LW-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir-lw.json&dataset=Manga109
+[SwinIR-LW-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir-lw.json&dataset=DTD235
+
+[SwinIR-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir.json&dataset=Set5
+[SwinIR-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir.json&dataset=Set14
+[SwinIR-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir.json&dataset=BSD100
+[SwinIR-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir.json&dataset=Urban100
+[SwinIR-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir.json&dataset=Manga109
+[SwinIR-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir.json&dataset=DTD235
 
 
 <!-- Footnote link definitions: Model Zoo -->
