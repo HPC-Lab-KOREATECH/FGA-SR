@@ -10,7 +10,7 @@
 
 > **Fourier-Guided Attention Upsampling for Image Super-Resolution**  
 > *Daejune Choi, Youchan No, Jinhyung Lee, Duksu Kim*  
-> [[Paper]](https://arxiv.org/abs/2508.10616) [[Project Page]](https://hpc-lab-koreatech.github.io/FGA-SR/) [[Weights]](https://huggingface.co/choidj/FGA-SR)
+> [[Paper]](https://arxiv.org/abs/2508.10616) [[Project Page]](https://hpc-lab-koreatech.github.io/FGA-SR/) [[Test Dataset]](https://huggingface.co/datasets/choidj/DTD235) [[Weights]](https://huggingface.co/choidj/FGA-SR)
 
 ---
 
@@ -52,9 +52,9 @@ FGA integrates:
 * ✅ **2025-08-20**: Code release (this repository).
 * ✅ **2025-08-20**: Model zoo & pretrained weights for ×4.
 * ✅ **2025-08-20**: DTD235 dataset released.
-* ✅ **2025-08-21**: Visual SR results.
-* ✅ **2025-08-21**: Inference code.
-
+* ✅ **2025-08-21**: Visual SR results uploaded.
+* ✅ **2025-08-21**: Inference code released.
+* ✅ **2025-08-22**: Project page released.
 ---
 
 ## ✨ Features
