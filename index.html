@@ -1,40 +1,31 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <!-- Meta tags for social media banners, these should be filled in appropriatly as they are your "business card" -->
-  <!-- Replace the content tag with appropriate information -->
-  <meta name="description" content="Fourier-Guided Attention (FGA) is a lightweight, frequency-aware upsampling module for single-image super-resolution that improves PSNR and frequency-domain fidelity with ~0.3M additional parameters.">
+  <meta name="description" content="FGA-SR is a lightweight, frequency-aware upsampler that integrates Fourier-Feature MLP, cross-resolution correlation attention, and a frequency-domain loss to reduce aliasing and preserve fine details for single-image super-resolution.">
   <meta property="og:title" content="FGA-SR: Fourier-Guided Attention Upsampling for Image Super-Resolution"/>
-  <meta property="og:description" content="FGA integrates a Fourier-Feature MLP, Correlation Attention (CAL/XRA), and frequency-domain loss to reduce aliasing and preserve fine details across diverse SR backbones."/>
+  <meta property="og:description" content="Drop-in, frequency-aware upsampling (≈0.3M params) that boosts PSNR and frequency fidelity across diverse SR backbones."/>
   <meta property="og:url" content="https://github.com/HPC-Lab-KOREATECH/FGA-SR"/>
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X630-->
-  <meta property="og:image" content="static/assets/network_structure.png" />
+  <meta property="og:image" content="static/assets/fft_and_feat.png"/>
   <meta property="og:image:width" content="1200"/>
   <meta property="og:image:height" content="630"/>
 
-
-  <meta name="twitter:title" content="FGA-SR: Fourier-Guided Attention for Super-Resolution">
-  <meta name="twitter:description" content="Lightweight, frequency-aware upsampling that boosts PSNR and spectral fidelity with minimal params.">
-  <!-- Path to banner image, should be in the path listed below. Optimal dimenssions are 1200X600-->
-  <meta name="twitter:image" content="static/assets/network_structure.png">
+  <meta name="twitter:title" content="FGA-SR: Fourier-Guided Attention Upsampling for Image Super-Resolution">
+  <meta name="twitter:description" content="Lightweight, frequency-aware upsampler that reduces aliasing and preserves textures.">
+  <meta name="twitter:image" content="static/assets/fft_and_feat.png">
   <meta name="twitter:card" content="summary_large_image">
-  <!-- Keywords for your paper to be indexed by-->
   <meta name="keywords" content="single image super-resolution, super-resolution, Fourier-Guided Attention, FGA, PixelShuffle, transposed convolution, correlation attention, CAL, XRA, frequency-domain loss, FL1, PSNR, FRC-AUC, deep learning, computer vision">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
   <title>FGA-SR: Fourier-Guided Attention Upsampling for Image Super-Resolution</title>
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-  rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="static/images/spinlab_logo.png">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="stylesheet" href="static/css/index.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -43,90 +34,97 @@
   <script src="static/js/bulma-carousel.min.js"></script>
   <script src="static/js/bulma-slider.min.js"></script>
   <script src="static/js/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+
+  <style>
+    .publication-title { line-height: 1.15; }
+    .eql-cntrb { display:block; margin-top: .35rem; color:#666; }
+    .center-image { display:block; margin: 0 auto; max-width: 100%; height:auto; }
+    .blend-img-background { background:#fff; border:1px solid #eee; border-radius:12px; padding:8px; }
+    .box.figure-card { background:#fff; border:1px solid #eee; border-radius:12px; padding:12px; }
+    .level-set { margin-top: .75rem; }
+    pre code { white-space: pre; }
+    .video-caption { margin-top: .5rem; }
+
+    /* Normalize Table2/Table3-like rendering in Quantitative carousel */
+    #carousel-quant .item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 560px;
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 12px;
+    }
+    #carousel-quant .item img {
+      max-height: 500px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto;
+    }
+    #carousel-quant .item .subtitle { margin-top: 8px; }
+  </style>
 </head>
 <body>
 
-
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">FGA-SR: Fourier-Guided Attention Upsampling for Image Super-Resolution</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://www.spinlab.kr/people" target="_blank">Daejune Choi</a>,</span>
+            <span class="author-block"><a href="https://www.spinlab.kr/people" target="_blank">Youchan No</a>,</span>
+            <span class="author-block"><a href="https://www.spinlab.kr/people" target="_blank">Jinhyung Lee</a>,</span>
+            <span class="author-block"><a href="https://www.spinlab.kr/people" target="_blank">Duksu Kim</a></span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Korea University of Technology and Education (KOREATECH)</span>
+            <span class="eql-cntrb"><small><br>arXiv 2025</small></span>
+          </div>
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">FGA-SR: Fourier-Guided Attention Upsampling for Image Super-Resolution</h1>
-            <div class="is-size-5 publication-authors">
-              <!-- Paper authors -->
-              <span class="author-block">
-                <a href="#" target="_blank">Daejune Choi</a>,
-              </span>
-              <span class="author-block">
-                <a href="#" target="_blank">Youchan No</a>,
-              </span>
-              <span class="author-block">
-                <a href="#" target="_blank">Jinhyung Lee</a>,
-              </span>
-              <span class="author-block">
-                <a href="#" target="_blank">Duksu Kim</a>
-              </span>
-                  </div>
-
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block">Korea University of Technology and Education (KOREATECH)<br>arXiv 2025</span>
-                  </div>
-
-                  <div class="column has-text-centered">
-                    <div class="publication-links">
-                         <!-- Arxiv PDF link -->
-                      <span class="link-block">
-                        <a href="https://arxiv.org/pdf/2508.10616.pdf" target="_blank"
-                        class="external-link button is-normal is-rounded is-dark">
-                        <span class="icon">
-                          <i class="fas fa-file-pdf"></i>
-                        </span>
-                        <span>Paper</span>
-                      </a>
-                    </span>
-
-                  <!-- Dataset link -->
-                  <span class="link-block">
-                    <a href="https://huggingface.co/datasets/choidj/FGA-SR" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fas fa-database"></i>
-                    </span>
-                    <span>Dataset</span>
-                  </a>
-                </span>
-
-                <!-- Weights link -->
-                <span class="link-block">
-                  <a href="https://huggingface.co/choidj/FGA-SR" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="fas fa-weight-hanging"></i>
-                  </span>
-                  <span>Weights</span>
+            <div class="publication-links">
+              <!-- Paper  -->
+              <span class="link-block">
+                <a href="https://arxiv.org/pdf/2508.10616.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
                 </a>
               </span>
-
-                  <!-- Github link -->
-                  <span class="link-block">
-                    <a href="https://github.com/HPC-Lab-KOREATECH/FGA-SR" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code</span>
-                  </a>
-                </span>
-
-                <!-- ArXiv abstract Link -->
-                <span class="link-block">
-                  <a href="https://arxiv.org/abs/2508.10616" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
+              <!-- arXiv -->
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2508.10616" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="ai ai-arxiv"></i></span><span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code -->
+              <span class="link-block">
+                <a href="https://github.com/HPC-Lab-KOREATECH/FGA-SR" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span><span>Code</span>
+                </a>
+              </span>
+              <!-- Visual Results -->
+              <span class="link-block">
+                <a href="https://github.com/HPC-Lab-KOREATECH/FGA-SR?tab=readme-ov-file#%EF%B8%8F-visual-results-sr-images-and-top-25-ring-images" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-images"></i></span>
+                  <span>Visual Results</span>
+                </a>
+              </span>
+              <!-- Dataset -->
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/choidj/DTD235" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-database"></i></span><span>Dataset</span>
+                </a>
+              </span>
+              <!-- Weights -->
+              <span class="link-block">
+                <a href="https://huggingface.co/choidj/FGA-SR" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-weight-hanging"></i></span><span>Weights</span>
                 </a>
               </span>
             </div>
@@ -137,25 +135,25 @@
   </div>
 </section>
 
-
-<!-- Teaser video-->
-<section class="hero teaser">
+<!-- TEASER -->
+<section class="section hero teaser">
   <div class="container is-max-desktop">
-    <div class="hero-body">
-      <video poster="" id="tree" autoplay controls muted loop height="100%">
-        <!-- Your video here -->
-        <source src="static/videos/banner_video.mp4"
-        type="video/mp4">
-      </video>
-      <h2 class="subtitle has-text-centered">
-        FGA is a drop-in, frequency-aware upsampler that reduces aliasing and preserves fine textures via Fourier-Feature MLP and correlation attention (CAL/XRA).
-      </h2>
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <center>
+          <img src="static/assets/teaser.png" alt="Pre/Post spectrum & feature maps across upsamplers" class="center-image"/>
+        </center>
+        <h2 class="subtitle has-text-centered">
+          Comparison of upsampling heads on <strong>Urban100</strong> (<em>img_007</em>) with an <strong>EDSR</strong> backbone (×4 SR).
+          Top row: pre-/post-upsampling feature maps; bottom row: corresponding Fourier magnitudes for Interp+Conv, Deconv, PixelShuffle, and <strong>FGA</strong>.
+          FGA concentrates energy along true orientations, suppresses folding near Nyquist, and yields cleaner post-upsampling features with fewer checkerboard artifacts.
+        </h2>
+      </div>
     </div>
   </div>
 </section>
-<!-- End teaser video -->
 
-<!-- Paper abstract -->
+<!-- ABSTRACT -->
 <section class="section hero is-light">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
@@ -163,166 +161,253 @@
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
           <p>
-            We propose Frequency-Guided Attention (FGA), a lightweight upsampling module for single image super-resolution. Conventional upsamplers, such as Sub-Pixel Convolution, are efficient but frequently fail to reconstruct high-frequency details and introduce aliasing artifacts. FGA addresses these issues by integrating (1) a Fourier feature-based Multi-Layer Perceptron (MLP) for positional frequency encoding, (2) a cross-resolution Correlation Attention Layer for adaptive spatial alignment, and (3) a frequency-domain L1 loss for spectral fidelity supervision. Adding merely 0.3M parameters, FGA consistently enhances performance across five diverse super-resolution backbones in both lightweight and full-capacity scenarios. Experimental results demonstrate average PSNR gains of 0.12–0.14 dB and improved frequency-domain consistency by up to 29%, particularly evident on texture-rich datasets. Visual and spectral evaluations confirm FGA’s effectiveness in reducing aliasing and preserving fine details, establishing it as a practical, scalable alternative to traditional upsampling methods.
+            We propose Frequency-Guided Attention (FGA), a lightweight upsampling module for single image super-resolution. Conventional upsamplers, such as Sub-Pixel Convolution, are efficient but frequently fail to reconstruct high-frequency details and introduce aliasing artifacts. FGA addresses these issues by integrating (1) a Fourier feature-based Multi-Layer Perceptron (MLP) for positional frequency encoding, (2) a cross-resolution Correlation Attention Layer for adaptive spatial alignment, and (3) a frequency-domain L1 loss for spectral fidelity supervision. Adding merely 0.3M parameters, FGA consistently enhances performance across five diverse super-resolution backbones in both lightweight and full-capacity scenarios. Experimental results demonstrate average PSNR gains of 0.12–0.14 dB and improved frequency-domain consistency by up to 29%, particularly evident on texture-rich datasets. Visual and spectral evaluations confirm FGA's effectiveness in reducing aliasing and preserving fine details, establishing it as a practical, scalable alternative to traditional upsampling methods.
           </p>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- End paper abstract -->
 
-
-<!-- Image carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-       <div class="item">
-        <img src="static/assets/network_structure.png" alt="FGA architecture: FF-MLP + PixelShuffle + CAL/XRA"/>
-        <h2 class="subtitle has-text-centered">
-          Architecture overview: Fourier-Feature MLP, PixelShuffle, CAL/XRA.
-        </h2>
-      </div>
-      <div class="item">
-        <img src="static/assets/fft_and_feat.png" alt="FFT magnitude and feature maps across upsamplers"/>
-        <h2 class="subtitle has-text-centered">
-          Spectral fidelity: cleaner high-frequency energy and features with FGA.
-        </h2>
-      </div>
-      <div class="item">
-        <img src="static/assets/img_024_RCANx4.png" alt="RCAN baseline x4 example"/>
-        <h2 class="subtitle has-text-centered">
-         Baseline (RCAN ×4, SPC): visible aliasing and softened textures.
-       </h2>
-     </div>
-     <div class="item">
-      <img src="static/assets/img_024_RCAN-FGAx4.png" alt="RCAN with FGA x4 example"/>
-      <h2 class="subtitle has-text-centered">
-        With FGA: sharper edges and finer micro-patterns, fewer artifacts.
-      </h2>
-    </div>
-  </div>
-</div>
-</div>
-</section>
-<!-- End image carousel -->
-
-
-
-
-<!-- Youtube video -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Video Presentation</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          
-          <div class="publication-video">
-            <!-- Optional: Replace with your own video link if available -->
-            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+<!-- METHOD OVERVIEW -->
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <div class="content">
+          <h2 class="title is-3">Method Overview</h2>
+          <center>
+            <img src="static/assets/architecture.png" alt="FGA architecture: FF-MLP + CAL + FL1" class="center-image blend-img-background"/>
+          </center>
+          <div class="level-set has-text-justified">
+            <p><strong>FF-MLP.</strong> Inject Fourier-encoded (sin/cos) spatial coordinates into an MLP aligned with sub-pixel groups, conditioning high-frequency behavior during PixelShuffle.</p>
+            <p><strong>CAL (in XRA, Cross-Resolution Attention).</strong> Window attention uses HR queries and LR keys/values to correct misalignment and suppress aliasing, with efficient overlapping windows.</p>
+            <p><strong>FL1 Loss.</strong> Direct supervision in the Fourier domain (half-spectrum), constraining both amplitude and phase to reduce ringing/checkerboard artifacts.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- End youtube video -->
 
-
-<!-- Video carousel -->
-<section class="hero is-small">
+<!-- SPECTRAL & FEATURE ANALYSIS -->
+<section class="hero is-small is-light">
   <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Qualitative Clips (optional)</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <video poster="" id="video1" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel1.mp4"
-            type="video/mp4">
-          </video>
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Spectral & Feature Analysis</h2>
+      <div id="results-carousel"
+           class="carousel results-carousel"
+           data-navigation="true"
+           data-pagination="true"
+           data-swipe="true"
+           data-loop="true"
+           data-autoplay="true"
+           data-autoplay-speed="5000">
+        <div class="item">
+          <img src="static/assets/fft_and_feat_1.png" alt="EDSR-origin: spectrum & feature maps">
+          <h2 class="subtitle has-text-centered">
+            <strong>EDSR (Original-scale)</strong> on <strong>Urban100</strong> (<em>img_004</em>): FGA concentrates spectral energy along true orientations and avoids checkerboard artifacts. The stabilized post-upsampling features mirror the cleaner frequency response.
+          </h2>
         </div>
-        <div class="item item-video2">
-          <video poster="" id="video2" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel2.mp4"
-            type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-video3">
-          <video poster="" id="video3" autoplay controls muted loop height="100%">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel3.mp4"
-            type="video/mp4">
-          </video>
+        <div class="item">
+          <img src="static/assets/fft_and_feat_2.png" alt="SwinIR-LW: spectrum & feature maps">
+          <h2 class="subtitle has-text-centered">
+            <strong>SwinIR (lightweight-scale)</strong> on <strong>Urban100</strong> (<em>img_012</em>): FGA reduces spectral folding and cleans pre-/post-upsampling feature maps compared to Interp+Conv/Deconv/PixelShuffle.
+          </h2>
         </div>
       </div>
     </div>
   </div>
 </section>
-<!-- End video carousel -->
 
+<!-- FRC-AUC -->
+<section class="section hero is-small">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <div class="content">
+          <h2 class="title is-3">FRC-AUC: Measuring High-Frequency Fidelity</h2>
 
+          <center>
+            <img src="static/assets/frc_graph_and_ring.png" alt="Average FRC curves and equal-pixel ring indexing map" class="center-image"/>
+          </center>
 
+          <div class="level-set has-text-justified">
+            <p>
+              We compute <strong>Fourier Ring Correlation</strong> (FRC) between the SR output \(\hat{Y}\) and the ground truth \(Y\).
+              The 2D spectrum is partitioned into \(N=64\) <em>equal-pixel</em> rings \(\{\mathcal{R}_i\}_{i=0}^{N-1}\).
+              Using your paper’s formulation, for a spatial frequency radius \(q\) we define:
+            </p>
 
+            <p class="has-text-centered">
+              \[
+              \mathrm{FRC}(q)=
+              \frac{\displaystyle\sum_{|\mathbf f|=q}F_{1}(\mathbf f)\,F_{2}^{*}(\mathbf f)}
+                   {\displaystyle\sqrt{\left(\sum_{|\mathbf f|=q}|F_{1}(\mathbf f)|^{2}\right)
+                                       \left(\sum_{|\mathbf f|=q}|F_{2}(\mathbf f)|^{2}\right)}}
+              \, .
+              \]
+            </p>
 
+            <p>
+              We summarize the high-frequency band by averaging the top quartile of rings. With \(N=64\), the high-frequency index starts at
+              \(i_{\mathrm{HF}}=\lceil 0.75N\rceil = 48\). The FRC-AUC is:
+            </p>
 
-<!-- Paper poster -->
+            <p class="has-text-centered">
+              \[
+              \mathrm{FRC\text{-}AUC} =
+              \frac{1}{N_{\text{HF}}}
+              \sum_{i=i_{\mathrm{HF}}}^{N - 1} \mathrm{FRC}_i,
+              \quad i_{\mathrm{HF}} = \lceil 0.75N \rceil = 48,
+              \quad N_{\text{HF}} = 16 \; (N - i_{\mathrm{HF}}).
+              \]
+            </p>
+          </div>
+          <h2 class="title is-3">Top-Quartile Ring–Masked Reconstructions (Rings 48–63)</h2>
+          <center>
+            <img src="static/assets/hf_vis.png" alt="Only rings 48–63 are retained in the Fourier domain; all other frequencies are zeroed before iFFT.
+  Colormap: viridis (purple/blue → yellow = larger magnitude of the band-passed spatial signal)." class="center-image"/>
+          </center>
+          <p>
+            This visualization is not an FFT magnitude map. We keep only the top-quartile rings (48–63), zero out all other frequencies, and invert back to the spatial domain. <strong>FGA</strong> suppresses checkerboard-like high-frequency components near the Nyquist region while concentrating energy along true structural directions, yielding spatial patterns closer to the GT.
+          </p>
+          <p>
+              Empirically, FGA consistently boosts the high-frequency FRC bands across architectures/datasets, indicating closer spectral agreement with GT textures and fewer aliasing artifacts.
+          </p>
+        </div>
+          <!-- FRC-AUC: Code & Links -->
+          <div class="card mt-5" id="frc-auc-code">
+            <header class="card-header">
+              <p class="card-header-title">FRC-AUC (Top-25% Rings)</p>
+              <a class="card-header-icon"
+                 href="https://github.com/HPC-Lab-KOREATECH/FGA-SR/blob/main/scripts/frc_demo.ipynb"
+                 target="_blank" rel="noopener" aria-label="Open demo notebook">
+                <span class="tag is-info is-light">Open demo notebook</span>
+              </a>
+            </header>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUANTITATIVE -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Quantitative Results</h2>
+      <div id="carousel-quant"
+           class="carousel results-carousel"
+           data-navigation="true"
+           data-pagination="true"
+           data-swipe="true"
+           data-loop="true"
+           data-autoplay="true"
+           data-autoplay-speed="5000">
+        <div class="item">
+          <img src="static/assets/psnr_and_ssim.png" alt="PSNR/SSIM table across datasets/backbones">
+          <h2 class="subtitle has-text-centered">PSNR/SSIM across Set5/14, BSD100, Urban100, Manga109, and DTD235.</h2>
+        </div>
+        <div class="item">
+          <img src="static/assets/frc_auc.png" alt="FRC-AUC table across datasets/backbones">
+          <h2 class="subtitle has-text-centered">FRC-AUC improvements indicate better high-frequency faithfulness.</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUALITATIVE -->
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3">Qualitative Comparisons</h2>
+      <div id="carousel-qual"
+           class="carousel results-carousel"
+           data-navigation="true"
+           data-pagination="true"
+           data-swipe="true"
+           data-loop="true"
+           data-autoplay="true"
+           data-autoplay-speed="5000">
+        <div class="item item-1">
+          <img src="static/assets/sr_result_1.png" alt="EDSR backbone results - case 1">
+        </div>
+        <div class="item item-2">
+          <img src="static/assets/sr_result_2.png" alt="EDSR backbone results - case 2">
+        </div>
+        <div class="item item-3">
+          <img src="static/assets/sr_result_3.png" alt="RCAN backbone results - case 1">
+        </div>
+        <div class="item item-4">
+          <img src="static/assets/sr_result_4.png" alt="RCAN backbone results - case 2">
+        </div>
+        <div class="item item-5">
+          <img src="static/assets/sr_result_5.png" alt="HAN backbone results - case 1">
+        </div>
+        <div class="item item-6">
+          <img src="static/assets/sr_result_6.png" alt="HAN backbone results - case 2">
+        </div>
+        <div class="item item-7">
+          <img src="static/assets/sr_result_7.png" alt="NLSN backbone results - case 1">
+        </div>
+        <div class="item item-8">
+          <img src="static/assets/sr_result_8.png" alt="NLSN backbone results - case 2">
+        </div>
+        <div class="item item-9">
+          <img src="static/assets/sr_result_9.png" alt="SwinIR backbone results - case 1">
+        </div>
+        <div class="item item-10">
+          <img src="static/assets/sr_result_10.png" alt="SwinIR backbone results - case 2">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAPER POSTER  -->
 <section class="hero is-small is-light">
   <div class="hero-body">
     <div class="container">
       <h2 class="title">Paper</h2>
-
-      <iframe  src="https://arxiv.org/pdf/2508.10616" width="100%" height="550">
-          </iframe>
-        
-      </div>
+      <iframe src="https://arxiv.org/pdf/2508.10616.pdf" width="100%" height="560" title="FGA-SR arXiv PDF"></iframe>
     </div>
-  </section>
-<!--End paper poster -->
+  </div>
+</section>
 
-
-<!--BibTex citation -->
-  <section class="section" id="BibTeX">
-    <div class="container is-max-desktop content">
-      <h2 class="title">BibTeX</h2>
-      <pre><code>@article{Choi2025FGA,
+<!-- BIBTEX -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+<pre><code>@article{Choi2025FGA,
   title   = {Fourier-Guided Attention Upsampling for Image Super-Resolution},
   author  = {Choi, Daejune and No, Youchan and Lee, Jinhyung and Kim, Duksu},
   journal = {arXiv preprint arXiv:2508.10616},
   year    = {2025}
 }</code></pre>
-    </div>
+  </div>
 </section>
-<!--End BibTex citation -->
 
-
-  <footer class="footer">
+<!-- FOOTER -->
+<footer class="footer">
   <div class="container">
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content">
-
           <p>
-            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
+            This page was built using the
+            <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer.
+            <br>This website is licensed under a
+            <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
           </p>
-
         </div>
       </div>
     </div>
   </div>
 </footer>
 
-<!-- Statcounter tracking code -->
-  
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-    <!-- End of Statcounter Code -->
-
-  </body>
-  </html>
+</body>
+</html>
