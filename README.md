@@ -3,7 +3,6 @@
 [![🤗 Test Dataset](https://img.shields.io/badge/%F0%9F%A4%97%20Test%20Dataset-choidj%2FDTD235-ffcc4d)](https://huggingface.co/datasets/choidj/DTD235)
 [![🤗 Weights](https://img.shields.io/badge/%F0%9F%A4%97%20Weights-choidj/FGA--SR-ffcc4d)](https://huggingface.co/choidj/FGA-SR)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/HPC-Lab-KOREATECH/FGA-SR/pulls)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](#license)
 
 # FGA-SR: Fourier-Guided Attention Upsampling for Image Super-Resolution
 
