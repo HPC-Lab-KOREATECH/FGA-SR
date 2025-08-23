@@ -40,9 +40,9 @@ def window_reverse(windows, window_size, h, w):
     return x
 
 
-# Overlapping Window-based Correlation Attention (OWCA)
-class OWCA(nn.Module):
-    r"""Overlapping Window-based Correlation Attention (OWCA) module with relative position bias.
+# Overlapping Window-based Cross Resolution Attention (OWXRA)
+class OWXRA(nn.Module):
+    r"""Overlapping Window-based Cross Resolution Attention (OWXRA) module with relative position bias.
 
     Args:
         dim (int): Number of input channels.
@@ -79,7 +79,7 @@ class OWCA(nn.Module):
         self.relative_position_bias_table = nn.Parameter(
             torch.zeros((self.window_size_up + self.overlap_win_size - 1) * (self.window_size_up + self.overlap_win_size - 1), num_heads))  # 2*Wh-1 * 2*Ww-1, nH
 
-        relative_position_index = self.calculate_rpi_owca()
+        relative_position_index = self.calculate_rpi_owxra()
         self.register_buffer('relative_position_index', relative_position_index)
 
         trunc_normal_(self.relative_position_bias_table, std=.02)
@@ -87,7 +87,7 @@ class OWCA(nn.Module):
 
         self.proj = nn.Linear(dim,dim)
 
-    def calculate_rpi_owca(self):
+    def calculate_rpi_owxra(self):
         # calculate relative position index for OCA
         window_size_up = self.upscale * self.window_size # HR window size
         window_size_cur = self.window_size + int(self.overlap_ratio * self.window_size) # LR window size (overlap)
@@ -148,9 +148,9 @@ class OWCA(nn.Module):
 
     def flops(self, h, w):
         """
-        Rough FLOPs for attention inside an OWCA block.
+        Rough FLOPs for attention inside an OWXRA block.
         Args:
-            h, w (int): spatial size of the LR feature map entering CAB
+            h, w (int): spatial size of the LR feature map entering CAL
             b (int): batch size
         """
         n_win = (h // self.window_size) * (w // self.window_size)         # number of windows
@@ -171,9 +171,9 @@ class OWCA(nn.Module):
         return n_win * fl_per_attn
     
 
-# Correlation Attention Block (CAB)
-class CAB(nn.Module):
-    """Correlation Attention Block (CAB)
+# Correlation Attention Layer (CAL)
+class CAL(nn.Module):
+    """Correlation Attention Layer (CAL)
 
     Args:
         dim (int): Number of input channels.
@@ -202,7 +202,7 @@ class CAB(nn.Module):
         self.window_size = window_size
         self.overlap_ratio = overlap_ratio
 
-        self.attn = OWCA(
+        self.attn = OWXRA(
             dim,
             window_size=window_size,
             upscale=upscale,
@@ -287,7 +287,7 @@ class FGA(nn.Module):
         self.embed = nn.Sequential(nn.Conv2d(self.back_embed_dim, dim, 3, 1, 1),
                                     nn.LeakyReLU(inplace=True))
 
-        self.coattn = CAB(
+        self.coattn = CAL(
             dim=dim,
             upscale=upscale,
             window_size=window_size,
@@ -315,7 +315,7 @@ class FGA(nn.Module):
     def flops(self, h, w, b=1):
         """
         Total FLOPs of the FGA upsampler, including:
-        embed-conv  → SubPixelMLP → CAB(attn+MLP) → unembed-conv
+        embed-conv  → SubPixelMLP → CAL(attn+MLP) → unembed-conv
         """
         flops = 0
 
@@ -326,7 +326,7 @@ class FGA(nn.Module):
         subpixelmlp_flops = self.upsample.flops(h, w)
         flops += subpixelmlp_flops
 
-        # (c) Correlation-attention block (CAB)
+        # (c) Corelation Attention Layer (CAL)
         coattn_flops = self.coattn.flops(h, w)
         flops += coattn_flops
 
