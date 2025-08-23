@@ -49,6 +49,7 @@ class OWXRA(nn.Module):
         window_size (int): The height and width of the window.
         overlap_ratio (float): The ratio of overlap between adjacent windows.
         num_heads (int): Number of attention heads, but only support 1 head.
+        upscale (int): Upscale factor.
         kv_bias (bool, optional):  If True, add a learnable bias to query, key, value. Default: True
         qk_scale (float | None, optional): Override default qk scale of head_dim ** -0.5 if set
     """
@@ -177,11 +178,9 @@ class CAL(nn.Module):
 
     Args:
         dim (int): Number of input channels.
+        upscale (int): Upscale factor.
         num_heads (int): Number of attention heads, but only support 1 head.
         window_size (int): The height and width of the window.
-        mlp_ratio (float): Ratio of MLP hidden dim to embedding dim.
-        drop (float): Dropout rate of MLP.
-        attn_drop (float): Dropout rate of attention weight.
         drop_path (float): Dropout rate of attention weight.
         kv_bias (bool, optional):  If True, add a learnable bias to query, key, value. Default: True
         qk_scale (float | None, optional): Override default qk scale of head_dim ** -0.5 if set

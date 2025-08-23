@@ -8,9 +8,13 @@ from fga.archs.arch_util import MLP, conv_flops
 
 class GetFourierFeatures(nn.Module):
     r"""Get Fourier Features.
-    From: Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains
+    From: 
+        Fourier Features Let Networks Learn High Frequency Functions in Low Dimensional Domains
+        
     Args:
-        dim (int): Number of input channels.
+        dim (int):    Number of input channels.
+        depth (int):  Number of FC layer of the MLP module.
+        scale (int):  Upscaling factor.
     """
     def __init__(self, dim, scale, depth):
         super(GetFourierFeatures, self).__init__()
@@ -96,6 +100,13 @@ class GetFourierFeatures(nn.Module):
         return flops
 
 class SubPixelMLP(nn.Module):
+    r"""Sub-pixel MLP: Fourier-feature enhancement, and sub-pixel shuffling (PixelShuffle).
+
+    Args:
+        dim (int):    Number of input channels.
+        depth (int):  Number of FC layer of the MLP module.
+        scale (int):  Upscaling factor.
+    """
     def __init__(self,
                  dim=64,
                  depth=0,
