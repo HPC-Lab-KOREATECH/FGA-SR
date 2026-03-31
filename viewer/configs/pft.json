@@ -1,0 +1,30 @@
+{
+  "title": "FGA-SR: PFT original-scale results",
+  "targets": [
+    {
+      "path": "/GT/{dataset}",
+      "label": "GT"
+    },
+    {
+      "path": "/GT/{dataset}_HF_vis",
+      "label": "GT (HF)"
+    },
+    {
+      "path": "/PFTx4/{dataset}",
+      "label": "PFT-SPC"
+    },
+    {
+      "path": "/PFTx4/{dataset}_HF_vis",
+      "label": "PFT-SPC (HF)"
+    },
+    {
+      "path": "/PFT-FGAx4/{dataset}",
+      "label": "PFT-FGA"
+    },
+    {
+      "path": "/PFT-FGAx4/{dataset}_HF_vis",
+      "label": "PFT-FGA (HF)"
+    }
+  ],
+  "configHelp": "Available {dataset} = Manga109, Set5, Set14, Urban100 + (BSDS100, BSDS200, DTD235)"
+}

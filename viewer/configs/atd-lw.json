@@ -1,0 +1,30 @@
+{
+  "title": "FGA-SR: ATD lightweight-scale results",
+  "targets": [
+    {
+      "path": "/GT/{dataset}",
+      "label": "GT"
+    },
+    {
+      "path": "/GT/{dataset}_HF_vis",
+      "label": "GT (HF)"
+    },
+    {
+      "path": "/ATD-LWx4/{dataset}",
+      "label": "ATD-LW-SPC"
+    },
+    {
+      "path": "/ATD-LWx4/{dataset}_HF_vis",
+      "label": "ATD-LW-SPC (HF)"
+    },
+    {
+      "path": "/ATD-LW-FGAx4/{dataset}",
+      "label": "ATD-LW-FGA"
+    },
+    {
+      "path": "/ATD-LW-FGAx4/{dataset}_HF_vis",
+      "label": "ATD-LW-FGA (HF)"
+    }
+  ],
+  "configHelp": "Available {dataset} = Manga109, Set5, Set14, Urban100 + (BSDS100, BSDS200, DTD235)"
+}

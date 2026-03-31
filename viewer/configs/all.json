@@ -169,7 +169,72 @@
     {
       "path": "/SwinIRx4/{dataset}_HF_vis",
       "label": "SwinIRx4 (HF)"
+    },
+    {
+      "path": "/ATD-FGAx4/{dataset}",
+      "label": "ATD-FGAx4"
+    },
+    {
+      "path": "/ATD-FGAx4/{dataset}_HF_vis",
+      "label": "ATD-FGAx4 (HF)"
+    },
+    {
+      "path": "/ATD-LW-FGAx4/{dataset}",
+      "label": "ATD-LW-FGAx4"
+    },
+    {
+      "path": "/ATD-LW-FGAx4/{dataset}_HF_vis",
+      "label": "ATD-LW-FGAx4 (HF)"
+    },
+    {
+      "path": "/ATD-LWx4/{dataset}",
+      "label": "ATD-LWx4"
+    },
+    {
+      "path": "/ATD-LWx4/{dataset}_HF_vis",
+      "label": "ATD-LWx4 (HF)"
+    },
+    {
+      "path": "/ATDx4/{dataset}",
+      "label": "ATDx4"
+    },
+    {
+      "path": "/ATDx4/{dataset}_HF_vis",
+      "label": "ATDx4 (HF)"
+    },
+    {
+      "path": "/PFT-FGAx4/{dataset}",
+      "label": "PFT-FGAx4"
+    },
+    {
+      "path": "/PFT-FGAx4/{dataset}_HF_vis",
+      "label": "PFT-FGAx4 (HF)"
+    },
+    {
+      "path": "/PFT-LW-FGAx4/{dataset}",
+      "label": "PFT-LW-FGAx4"
+    },
+    {
+      "path": "/PFT-LW-FGAx4/{dataset}_HF_vis",
+      "label": "PFT-LW-FGAx4 (HF)"
+    },
+    {
+      "path": "/PFT-LWx4/{dataset}",
+      "label": "PFT-LWx4"
+    },
+    {
+      "path": "/PFT-LWx4/{dataset}_HF_vis",
+      "label": "PFT-LWx4 (HF)"
+    },
+    {
+      "path": "/PFTx4/{dataset}",
+      "label": "PFTx4"
+    },
+    {
+      "path": "/PFTx4/{dataset}_HF_vis",
+      "label": "PFTx4 (HF)"
     }
+    
   ],
   "configHelp": "Available {dataset} = BSDS100, DTD235, Manga109, Set14, Set5, Urban100"
 }
