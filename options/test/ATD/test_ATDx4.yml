@@ -1,0 +1,113 @@
+name: ATDx4
+model_type: SRModel
+scale: 4
+num_gpu: 1  # set num_gpu: 0 for cpu mode
+manual_seed: 0
+data_range: 1
+
+datasets:
+  test_1:
+    name: Set5
+    type: PairedImageDataset
+    dataroot_gt: datasets/Set5/GTmod4
+    dataroot_lq: datasets/Set5/LRbicx4
+    io_backend:
+      type: disk
+
+  test_2:
+    name: Set14
+    type: PairedImageDataset
+    dataroot_gt: datasets/Set14/GTmod4
+    dataroot_lq: datasets/Set14/LRbicx4
+    io_backend:
+      type: disk
+
+  test_3:
+    name: Urban100
+    type: PairedImageDataset
+    dataroot_gt: datasets/Urban100/GTmod4
+    dataroot_lq: datasets/Urban100/LRbicx4
+    io_backend:
+      type: disk
+
+  test_4:
+    name: Manga109
+    type: PairedImageDataset
+    dataroot_gt: datasets/Manga109/GTmod4
+    dataroot_lq: datasets/Manga109/LRbicx4
+    io_backend:
+      type: disk
+
+  test_5:
+    name: BSDS100
+    type: PairedImageDataset
+    dataroot_gt: datasets/BSDS100/GTmod4
+    dataroot_lq: datasets/BSDS100/LRbicx4
+    io_backend:
+      type: disk
+
+  test_6:
+    name: DTD235
+    type: PairedImageDataset
+    dataroot_gt:  datasets/DTD235/GTmod4
+    dataroot_lq:  datasets/DTD235/LRbicx4
+    io_backend:
+      type: disk
+
+  test_7:
+    name: DIV2K100
+    type: PairedImageDataset
+    dataroot_gt: datasets/DIV2K/DIV2K_valid_HR
+    dataroot_lq: datasets/DIV2K/DIV2K_valid_LR_bicubic/X4
+    filename_tmpl: '{}x4'
+    io_backend:
+      type: disk
+
+# network structures
+network_g:
+  type: ATD
+  upscale: 4
+  in_chans: 3
+  img_size: 96
+  embed_dim: 210
+  depths: [6, 6, 6, 6, 6, 6,]
+  num_heads: [6, 6, 6, 6, 6, 6,]
+  window_size: 16
+  category_size: 256
+  num_tokens: 128
+  reducted_dim: 20
+  convffn_kernel_size: 5
+  img_range: 1.
+  mlp_ratio: 2
+  upsampler: 'pixelshuffle'
+  resi_connection: '1conv'
+  use_checkpoint: true
+
+# path
+path:
+  pretrain_network_g: experiments/pretrained_models/ATD/003_ATD_SRx4_finetune.pth
+  strict_load_g: true
+  param_key_g: params_ema
+
+# validation settings
+val:
+  save_img: true
+  suffix: ~  # add suffix to saved images, if None, use exp name
+
+  metrics:
+    psnr: # metric name, can be arbitrary
+      type: calculate_psnr
+      crop_border: 4
+      test_y_channel: true
+    ssim:
+      type: calculate_ssim
+      crop_border: 4
+      test_y_channel: true
+    frc_auc:
+      type: calculate_frc_auc
+      num_rho: 64
+      full: true
+    qtr_frc_auc:
+      type: calculate_frc_auc
+      num_rho: 64
+      full: false

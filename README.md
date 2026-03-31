@@ -16,7 +16,7 @@
 
 ## 🔎 Summary
 
-We propose **Fourier-Guided Attention (FGA)**, a **drop-in upsampler** for single-image super-resolution. FGA adds only **~0.3M** parameters yet consistently improves PSNR (**+0.14dB** on lightweight backbones; **+0.12dB** on original-scale backbones) and substantially improves **frequency-domain fidelity** (e.g., **+26–29%** FRC-AUC on Urban100 across multiple backbones).  
+We propose **Fourier-Guided Attention (FGA)**, a **drop-in upsampler** for single-image super-resolution. FGA adds only **~0.3M** parameters and improves results across **seven** backbones (**EDSR/RCAN/HAN/NLSN/SwinIR/ATD/PFT**). In the latest ATD/PFT results, lightweight variants improve on Urban100 and Manga109 (ATD-µ: **+0.09dB / +0.22dB**, PFT-µ: **+0.03dB / +0.18dB**), while full-capacity ATD also shows consistent gains. FGA also improves **frequency-domain fidelity** (e.g., **+26–29%** FRC-AUC on Urban100 for EDSR-µ/NLSN-µ).  
 FGA integrates:
 - **Fourier-Feature MLP** for position-aware frequency encoding  
 - **Correlation Attention Layer and Cross-Resolution Correlation Attention (CAL/XRA)** for feature alignment  
@@ -55,11 +55,12 @@ FGA integrates:
 * ✅ **2025-08-21**: Visual SR results uploaded.
 * ✅ **2025-08-21**: Inference code released.
 * ✅ **2025-08-22**: Project page released.
+* ✅ **2026-03-31**: Added support for a recent SOTA backbone model (PFT, ATD).
 ---
 
 ## ✨ Features
 - **Drop-in**: Replace common upsamplers with FGA
-- **Backbone-agnostic**: Works with CNN/Transformer SR (EDSR/RCAN/HAN/NLSN/SwinIR-style)
+- **Backbone-agnostic**: Works with CNN/Transformer SR (EDSR/RCAN/HAN/NLSN/SwinIR/ATD/PFT-style)
 - **Lightweight**: ~+0.3M parameters
 - **Spectral-aware**: Less aliasing/ringing via frequency-domain supervision
 
@@ -72,6 +73,7 @@ Install **PyTorch** first (choose the proper CUDA build from pytorch.org), then:
 ```bash
 pip install -r requirements.txt
 python setup.py develop
+./ops_smm/make.sh
 ```
 
 Or use the provided [Dockerfile](dockerfile).
@@ -113,7 +115,7 @@ python inference.py \
 > **Important:** This inference script supports **FGA** upsamplers **only**.  
 > ✅ `EDSR-LW-FGAx4.pth` (supported)  
 > ❌ `EDSR-LWx4.pth` (not supported)  
-> `--backbone`: one of `EDSR`, `EDSR-LW`, `RCAN`, `RCAN-LW`, `HAN`, `HAN-LW`, `SwinIR`, `SwinIR-LW`, `NLSN`, `NLSN-LW`  
+> `--backbone`: one of `EDSR`, `EDSR-LW`, `RCAN`, `RCAN-LW`, `HAN`, `HAN-LW`, `NLSN`, `NLSN-LW`, `SwinIR`, `SwinIR-LW`, `ATD`, `ATD-LW`, `PFT`, `PFT-LW`  
 > `--weight_path`: path to the downloaded checkpoint
 
 ### 🧪 Testing
@@ -171,18 +173,19 @@ class MySRNet(nn.Module):
 **SPC** : Sub-Pixel Convolution (**PixelShuffle**)  
 **FGA** : Fourier-Guided Attention (**Ours**)  
 
-**Backbones**: EDSR, RCAN, HAN, NLSN, SwinIR  
+**Backbones**: EDSR, RCAN, HAN, NLSN, SwinIR, ATD, PFT  
 **Backbone scale**: Lightweight-scale (µ), Original-scale (origin)  
 
 > <details>
 > <summary><b>Parameters</b></summary>
 > 
-> | Setting        |  EDSR |  RCAN |  HAN  |  NLSN | SwinIR |
-> | -------------- | :---: | :---: | :---: | :---: | :----: |
-> | µ + SPC        |  1.5M |  4.3M |  8.6M |  1.6M |  1.2M  |
-> | µ + FGA        |  1.8M |  4.6M |  8.9M |  1.9M |  1.5M  |
-> | Original + SPC | 38.7M | 15.6M | 16.1M | 39.7M |  11.9M |
-> | Original + FGA | 39.0M | 15.9M | 16.4M | 40.0M |  12.2M |
+> | Setting        |  EDSR |  RCAN |  HAN  |  NLSN | SwinIR |  ATD  |  PFT  |
+> | -------------- | :---: | :---: | :---: | :---: | :----: | :---: | :---: |
+> | µ + SPC        |  1.5M |  4.3M |  8.6M |  1.6M |  1.2M  |  0.8M |  0.8M |
+> | µ + FGA        |  1.8M |  4.6M |  8.9M |  1.9M |  1.5M  |  1.1M |  1.1M |
+> | Original + SPC | 38.7M | 15.6M | 16.1M | 39.7M |  11.9M | 20.3M | 19.8M |
+> | Original + FGA | 39.0M | 15.9M | 16.4M | 40.0M |  12.2M | 20.6M | 20.1M |
+>
 > 
 > </details>
 
@@ -215,6 +218,14 @@ class MySRNet(nn.Module):
 > |                  | **FGA**   | **32.59** | **28.97** | **27.82** | **26.86** | **31.55** | **30.06** |
 > | SwinIR-origin    | SPC       | 32.92     | 29.09     | 27.92     | 27.45     | 32.03     | 30.28     |
 > |                  | **FGA**   | **32.96** | **29.13** | **27.96** | **27.47** | **32.14** | **30.29** |
+> | ATD-µ            | SPC       | 32.63     | 28.89     | 27.79     | 26.97     | 31.48     | 30.12     |
+> |                  | **FGA**   | **32.66** | **29.00** | **27.84** | **27.06** | **31.70** | **30.16** |
+> | ATD-origin       | SPC       | 33.10     | 29.24     | 28.01     | 28.17     | 32.62     | 30.57     |
+> |                  | **FGA**   | **33.11** | **29.31** | **28.06** | **28.25** | **32.76** | **30.58** |
+> | PFT-µ            | SPC       | 32.63     | 28.92     | 27.79     | 27.20     | 31.51     | 30.14     |
+> |                  | **FGA**   | **32.68** | **29.02** | **27.85** | **27.23** | **31.69** | **30.17** |
+> | PFT-origin       | SPC       | **33.15** | 29.29     | 28.02     | **28.20** | 32.63     | **30.62** |
+> |                  | **FGA**   | 33.12     | **29.32** | **28.04** | 28.19     | **32.70** | 30.59     |
 > 
 > </details>
 
@@ -248,6 +259,14 @@ We additionally report **FRC-AUC (Top-25% frequency rings)** as frequency-domain
 > |               | **FGA**   | **0.2965** | **0.2286** | **0.2392** | **0.3080** | **0.3548** | **0.1740** |
 > | SwinIR-origin | SPC       |   0.2955   |   0.2238   |   0.2470   |   0.3371   |   0.3616   |   0.1805   |
 > |               | **FGA**   | **0.3028** | **0.2336** | **0.2492** | **0.3477** | **0.3715** | **0.1815** |
+> | ATD-µ         | SPC       |   0.2599   |   0.2130   |   0.2101   |   0.2528   |   0.3330   |   0.1701   |
+> |               | **FGA**   | **0.2894** | **0.2405** | **0.2245** | **0.3243** | **0.3538** | **0.1789** |
+> | ATD-origin    | SPC       |   0.2942   |   0.2525   | **0.2434** |   0.3795   |   0.3772   | **0.1928** |
+> |               | **FGA**   | **0.2955** | **0.2549** |   0.2361   | **0.3912** | **0.3840** |   0.1893   |
+> | PFT-µ         | SPC       |   0.2693   |   0.2129   |   0.2120   |   0.2603   |   0.3162   |   0.1674   |
+> |               | **FGA**   | **0.3044** | **0.2482** | **0.2358** | **0.3357** | **0.3497** | **0.1843** |
+> | PFT-origin    | SPC       |   0.3109   |   0.2606   |   0.2446   |   0.3740   |   0.3822   |   0.1992   |
+> |               | **FGA**   | **0.3115** | **0.2629** | **0.2457** | **0.3883** | **0.3891** | **0.2019** |
 > 
 > </details>
 
@@ -277,6 +296,10 @@ We additionally report **FRC-AUC (Top-25% frequency rings)** as frequency-domain
 > | **NLSN‑origin**   | [Set5][NLSN-Set5] · [Set14][NLSN-Set14] · [BSD100][NLSN-BSD100] · [Urban100][NLSN-Urban100] · [Manga109][NLSN-Manga109] · [DTD235][NLSN-DTD235]             |
 > | **SwinIR‑µ**      | [Set5][SwinIR-LW-Set5] · [Set14][SwinIR-LW-Set14] · [BSD100][SwinIR-LW-BSD100] · [Urban100][SwinIR-LW-Urban100] · [Manga109][SwinIR-LW-Manga109] · [DTD235][SwinIR-LW-DTD235] |
 > | **SwinIR‑origin** | [Set5][SwinIR-Set5] · [Set14][SwinIR-Set14] · [BSD100][SwinIR-BSD100] · [Urban100][SwinIR-Urban100] · [Manga109][SwinIR-Manga109] · [DTD235][SwinIR-DTD235] |
+> | **ATD‑µ**         | [Set5][ATD-LW-Set5] · [Set14][ATD-LW-Set14] · [BSD100][ATD-LW-BSD100] · [Urban100][ATD-LW-Urban100] · [Manga109][ATD-LW-Manga109] · [DTD235][ATD-LW-DTD235] |
+> | **ATD‑origin**    | [Set5][ATD-Set5] · [Set14][ATD-Set14] · [BSD100][ATD-BSD100] · [Urban100][ATD-Urban100] · [Manga109][ATD-Manga109] · [DTD235][ATD-DTD235] |
+> | **PFT‑µ**         | [Set5][PFT-LW-Set5] · [Set14][PFT-LW-Set14] · [BSD100][PFT-LW-BSD100] · [Urban100][PFT-LW-Urban100] · [Manga109][PFT-LW-Manga109] · [DTD235][PFT-LW-DTD235] |
+> | **PFT‑origin**    | [Set5][PFT-Set5] · [Set14][PFT-Set14] · [BSD100][PFT-BSD100] · [Urban100][PFT-Urban100] · [Manga109][PFT-Manga109] · [DTD235][PFT-DTD235] |
 > 
 > </details>
 
@@ -305,6 +328,12 @@ We additionally report **FRC-AUC (Top-25% frequency rings)** as frequency-domain
 > |   ×4  |    SwinIR-µ   |    SPC    | [Config][SwinIR-LW-SPC-config] | [Weight][SwinIR-LW-SPC-weight] |
 > |   ×4  |    SwinIR-µ   |    FGA    | [Config][SwinIR-LW-FGA-config] | [Weight][SwinIR-LW-FGA-weight] |
 > |   ×4  | SwinIR-origin |    FGA    | [Config][SwinIR-FGA-config] | [Weight][SwinIR-FGA-weight] |
+> |   ×4  |     ATD-µ     |    SPC    | [Config][ATD-LW-SPC-config] | [Weight][ATD-LW-SPC-weight] |
+> |   ×4  |     ATD-µ     |    FGA    | [Config][ATD-LW-FGA-config] | [Weight][ATD-LW-FGA-weight] |
+> |   ×4  |   ATD-origin  |    FGA    | [Config][ATD-FGA-config] | [Weight][ATD-FGA-weight] |
+> |   ×4  |     PFT-µ     |    SPC    | [Config][PFT-LW-SPC-config] | [Weight][PFT-LW-SPC-weight] |
+> |   ×4  |     PFT-µ     |    FGA    | [Config][PFT-LW-FGA-config] | [Weight][PFT-LW-FGA-weight] |
+> |   ×4  |   PFT-origin  |    FGA    | [Config][PFT-FGA-config] | [Weight][PFT-FGA-weight] |
 > 
 > </details>
 
@@ -404,6 +433,34 @@ If you have any question, please email eowns02@gmail.com to discuss with the aut
 [SwinIR-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir.json&dataset=Manga109
 [SwinIR-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=swinir.json&dataset=DTD235
 
+[ATD-LW-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd-lw.json&dataset=Set5
+[ATD-LW-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd-lw.json&dataset=Set14
+[ATD-LW-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd-lw.json&dataset=BSD100
+[ATD-LW-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd-lw.json&dataset=Urban100
+[ATD-LW-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd-lw.json&dataset=Manga109
+[ATD-LW-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd-lw.json&dataset=DTD235
+
+[ATD-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd.json&dataset=Set5
+[ATD-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd.json&dataset=Set14
+[ATD-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd.json&dataset=BSD100
+[ATD-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd.json&dataset=Urban100
+[ATD-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd.json&dataset=Manga109
+[ATD-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=atd.json&dataset=DTD235
+
+[PFT-LW-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft-lw.json&dataset=Set5
+[PFT-LW-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft-lw.json&dataset=Set14
+[PFT-LW-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft-lw.json&dataset=BSD100
+[PFT-LW-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft-lw.json&dataset=Urban100
+[PFT-LW-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft-lw.json&dataset=Manga109
+[PFT-LW-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft-lw.json&dataset=DTD235
+
+[PFT-Set5]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft.json&dataset=Set5
+[PFT-Set14]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft.json&dataset=Set14
+[PFT-BSD100]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft.json&dataset=BSD100
+[PFT-Urban100]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft.json&dataset=Urban100
+[PFT-Manga109]:https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft.json&dataset=Manga109
+[PFT-DTD235]: https://hpc-lab-koreatech.github.io/FGA-SR/viewer/?config=pft.json&dataset=DTD235
+
 
 <!-- Footnote link definitions: Model Zoo -->
 [EDSR-LW-SPC-config]: options/train/EDSR/train_EDSR-LWx4.yml
@@ -440,3 +497,17 @@ If you have any question, please email eowns02@gmail.com to discuss with the aut
 [SwinIR-LW-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/SwinIR/SwinIR-LW-FGAx4.pth
 [SwinIR-FGA-config]: options/train/SwinIR/train_SwinIR-FGAx4.yml
 [SwinIR-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/SwinIR/SwinIR-FGAx4.pth
+
+[ATD-LW-SPC-config]: https://github.com/CVL-UESTC/Adaptive-Token-Dictionary/blob/d25fd845ff17742bd846a77a887c3570b72c8a81/options/train/103_ATD_light_SRx4_finetune.yml
+[ATD-LW-SPC-weight]: https://drive.google.com/drive/folders/1ubTAZAxCdV9hKg1QMMJ4KOj5z6CVQUeT
+[ATD-LW-FGA-config]: options/train/ATD/train_ATD-LW-FGAx4.yml
+[ATD-LW-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/ATD/ATD-LW-FGAx4.pth
+[ATD-FGA-config]: options/train/ATD/train_ATD-FGAx4.yml
+[ATD-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/ATD/ATD-FGAx4.pth
+
+[PFT-LW-SPC-config]: https://github.com/CVL-UESTC/PFT-SR/blob/master/options/train/103_PFT_light_SRx4_finetune.yml
+[PFT-LW-SPC-weight]: https://drive.google.com/drive/folders/1ChkxVDghFWUtJydJKLp5yssrUfm0VWfg
+[PFT-LW-FGA-config]: options/train/PFT/train_PFT-LW-FGAx4.yml
+[PFT-LW-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/PFT/PFT-LW-FGAx4.pth
+[PFT-FGA-config]: options/train/PFT/train_PFT-FGAx4.yml
+[PFT-FGA-weight]: https://huggingface.co/choidj/FGA-SR/blob/main/FGA/PFT/PFT-FGAx4.pth
