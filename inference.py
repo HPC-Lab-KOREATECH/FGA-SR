@@ -92,6 +92,107 @@ BACKBONE_SPECS = {
         "img_range": 1.0,
         "fga_back_dim": 64,
     },
+    "ATD": {
+        "builder": "atd",
+        "args": dict(
+            upscale=4,
+            in_chans=3,
+            img_size=96,
+            embed_dim=210,
+            depths=[6, 6, 6, 6, 6, 6],
+            num_heads=[6, 6, 6, 6, 6, 6],
+            window_size=16,
+            category_size=256,
+            num_tokens=128,
+            reducted_dim=20,
+            convffn_kernel_size=5,
+            img_range=1.0,
+            mlp_ratio=2,
+            upsampler="pixelshuffle",
+            resi_connection="1conv",
+            use_checkpoint=True,
+        ),
+        "img_range": 1.0,
+        "fga_back_dim": 64,
+    },
+    "ATD-LW": {
+        "builder": "atd",
+        "args": dict(
+            upscale=4,
+            in_chans=3,
+            img_size=64,
+            embed_dim=48,
+            depths=[6, 6, 6, 6],
+            num_heads=[4, 4, 4, 4],
+            window_size=16,
+            category_size=128,
+            num_tokens=64,
+            reducted_dim=8,
+            convffn_kernel_size=7,
+            img_range=1.0,
+            mlp_ratio=1,
+            upsampler="pixelshuffledirect",
+            resi_connection="1conv",
+            use_checkpoint=False,
+        ),
+        "img_range": 1.0,
+        "fga_back_dim": 48,
+    },
+    "PFT": {
+        "builder": "pft",
+        "args": dict(
+            upscale=4,
+            in_chans=3,
+            img_size=64,
+            embed_dim=240,
+            depths=[4, 4, 4, 6, 6, 6],
+            num_heads=6,
+            num_topk=[
+                1024, 1024, 1024, 1024,
+                256, 256, 256, 256,
+                128, 128, 128, 128,
+                64, 64, 64, 64, 64, 64,
+                32, 32, 32, 32, 32, 32,
+                16, 16, 16, 16, 16, 16,
+            ],
+            window_size=32,
+            convffn_kernel_size=7,
+            img_range=1.0,
+            mlp_ratio=2.0,
+            upsampler="pixelshuffle",
+            resi_connection="1conv",
+            use_checkpoint=False,
+        ),
+        "img_range": 1.0,
+        "fga_back_dim": 64,
+    },
+    "PFT-LW": {
+        "builder": "pft",
+        "args": dict(
+            upscale=4,
+            in_chans=3,
+            img_size=64,
+            embed_dim=52,
+            depths=[2, 4, 6, 6, 6],
+            num_heads=4,
+            num_topk=[
+                1024, 1024,
+                256, 256, 256, 256,
+                128, 128, 128, 128, 128, 128,
+                64, 64, 64, 64, 64, 64,
+                32, 32, 32, 32, 32, 32,
+            ],
+            window_size=32,
+            convffn_kernel_size=7,
+            img_range=1.0,
+            mlp_ratio=1,
+            upsampler="pixelshuffledirect",
+            resi_connection="1conv",
+            use_checkpoint=False,
+        ),
+        "img_range": 1.0,
+        "fga_back_dim": 52,
+    },
 }
 
 def read_image_rgb(path):
@@ -195,12 +296,36 @@ def build_nlsn(args):
 def build_swinir(args):
     return SwinIR(**args)
 
+
+def build_atd(args):
+    try:
+        from fga.archs.atd_arch import ATD
+    except ModuleNotFoundError as exc:
+        raise RuntimeError(
+            "ATD import failed. Install the missing dependency and retry."
+        ) from exc
+
+    return ATD(**args)
+
+
+def build_pft(args):
+    try:
+        from fga.archs.pft_arch import PFT
+    except ModuleNotFoundError as exc:
+        raise RuntimeError(
+            "PFT import failed. The custom extension 'smm_cuda' is required for PFT inference."
+        ) from exc
+
+    return PFT(**args)
+
 BUILDERS = {
     "edsr": build_edsr,
     "rcan": build_rcan,
     "han": build_han,
     "nlsn": build_nlsn,
     "swinir": build_swinir,
+    "atd": build_atd,
+    "pft": build_pft,
 }
 
 def load_model(backbone, ckpt_path):
@@ -335,7 +460,11 @@ def run_dir(
 def parse_args():
     p = argparse.ArgumentParser(description="FGA-SR Inference (x4)")
     p.add_argument("--backbone", type=str, required=True,
-                   choices=["EDSR", "EDSR-LW", "RCAN", "RCAN-LW", "HAN", "HAN-LW", "SwinIR", "SwinIR-LW", "NLSN", "NLSN-LW"],
+                   choices=[
+                       "EDSR", "EDSR-LW", "RCAN", "RCAN-LW", "HAN", "HAN-LW",
+                       "SwinIR", "SwinIR-LW", "NLSN", "NLSN-LW",
+                       "ATD", "ATD-LW", "PFT", "PFT-LW",
+                   ],
                    help="Backbone type (FGA upsampler is automatically attached).")
     p.add_argument("--input_dir", type=str, required=True, help="Low-resolution image folder")
     p.add_argument("--output_dir", type=str, required=True, help="Output folder")
