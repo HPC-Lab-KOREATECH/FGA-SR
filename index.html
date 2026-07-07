@@ -86,13 +86,14 @@
           </div>
           <div class="is-size-5 publication-authors">
             <span class="author-block">Korea University of Technology and Education (KOREATECH)</span>
-            <span class="eql-cntrb"><small><br>arXiv 2025</small></span>
+            <span class="eql-cntrb"><br>Image and Vision Computing<br><small>Volume 172, August 2026, 106049</small></span>
+            <span class="eql-cntrb"></span>
           </div>
           <div class="column has-text-centered">
             <div class="publication-links">
               <!-- Paper  -->
               <span class="link-block">
-                <a href="https://arxiv.org/pdf/2508.10616.pdf" target="_blank" class="external-link button is-normal is-rounded is-dark">
+                <a href="https://doi.org/10.1016/j.imavis.2026.106049" target="_blank" class="external-link button is-normal is-rounded is-dark">
                   <span class="icon"><i class="fas fa-file-pdf"></i></span><span>Paper</span>
                 </a>
               </span>
@@ -398,11 +399,18 @@
 <section class="section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
-<pre><code>@article{Choi2025FGA,
-  title   = {Fourier-Guided Attention Upsampling for Image Super-Resolution},
-  author  = {Choi, Daejune and No, Youchan and Lee, Jinhyung and Kim, Duksu},
-  journal = {arXiv preprint arXiv:2508.10616},
-  year    = {2025}
+<pre><code>@article{CHOI2026106049,
+title = {Fourier-guided attention upsampling for image super-resolution},
+journal = {Image and Vision Computing},
+volume = {172},
+pages = {106049},
+year = {2026},
+issn = {0262-8856},
+doi = {https://doi.org/10.1016/j.imavis.2026.106049},
+url = {https://www.sciencedirect.com/science/article/pii/S0262885626001563},
+author = {Daejune Choi and Youchan No and Jinhyung Lee and Duksu Kim},
+keywords = {Super-resolution, Attention, Upsampler},
+abstract = {We propose Fourier-Guided Attention (FGA), a lightweight and general-purpose upsampling module for single image super-resolution. While conventional approaches such as sub-pixel convolution remain efficient and widely adopted, they often fail to recover high-frequency details and are prone to aliasing artifacts such as checkerboard patterns. To address these limitations, FGA incorporates three complementary components: (1) a Fourier feature-based Multi-Layer Perceptron (MLP) for positional frequency encoding, (2) a cross-resolution Correlation Attention Layer for adaptive spatial alignment, and (3) a frequency-domain L1 loss for spectral fidelity supervision. Despite introducing only 0.3M additional parameters, FGA consistently improves reconstruction quality across seven representative super-resolution backbones under both lightweight and full-capacity settings. Experimental results demonstrate PSNR gains by up to 0.42 dB and improved frequency-domain consistency by up to 29%, particularly evident on texture-rich datasets. Visual and spectral evaluations confirm FGA’s effectiveness in reducing aliasing and preserving fine details, establishing it as a practical, scalable alternative to traditional upsampling methods. Our code and trained weights are publicly available.11http://github.com/HPC-Lab-KOREATECH/FGA-SR.}
 }</code></pre>
   </div>
 </section>
